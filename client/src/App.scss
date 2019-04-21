@@ -1,28 +1,169 @@
+@import './assets/styles/_mixins';
+
 .App {
-  text-align: center;
+	background: #2b3252;  /* fallback for old browsers */
+	text-align: center;
+	padding-bottom: 30px;
+	.App-bot {
+		height: 80px;
+	}
+	
+	.App-header {
+		background-color: #ef5455;
+		color: #2b3252;
+		padding: 21px;
+		padding-top: 72px;
+	}
+
+	.App-commander {
+		position: fixed;
+		z-index: 999;
+		top: 15px;
+		left: 15px;
+		padding: 0;
+
+		.logo {
+			@include transition(margin-left, 0.3s, ease);
+			margin: 0;
+			display: inline-block;
+			margin-right: 9px;
+			margin-left: -300px;
+			img {
+				@include border-radius(50%);
+				width: 57px;
+				height: 57px;
+			}
+		}
+		.keypad {
+			@include border-radius(30px);
+			@include bg-tr;
+			padding: 9.6px;
+			float: right;
+			.do {
+				margin-right: 9px !important;
+				&:last-child {
+					margin-right: 0 !important;
+				}
+			}
+		}
+		.dashboard {
+			@include border-radius(21px);
+			@include transition(left, 0.3s, ease);
+			@include bg-tr;
+
+			margin-top: 3px;
+			left: -300px;
+			position: absolute;
+			width: 240px;
+			padding: 9.6px;
+
+			.dashboard-top {
+				text-align: right;
+				margin-bottom: 9px !important;
+				position: relative;
+				
+				h5 {
+					color: #fff;
+					text-shadow: 1px 1px 1px #111;
+					position: absolute !important;
+					display: inline-block !important;
+					padding-left: 6px;
+					left: 0;
+					bottom: 0;
+					margin: 0;
+					small {
+						font-weight: normal;
+						margin-left: 6px;
+					}
+				}
+			}
+
+			.do {
+				display: inline-block;
+				&:last-child {
+					margin-bottom: 0 !important;
+				}
+			}
+		}
+
+		/*.App-commander*/
+		&.opened {
+			.logo {
+				margin-left: 0 !important;
+			}
+
+			.dashboard {
+				left: 0;
+			}
+		}
+	}
+	
+	.App-board {
+		width: 600px;
+		margin: 0 auto;
+		color: #fad744;
+
+		.App-board-panel {
+			.panel-title {
+				position: relative;
+				padding-left: 6px;
+				text-align: left;
+				span {
+					font-size: 18px;
+					font-weight: bold;
+				}
+				small {
+					font-size: 12px;
+					margin-left: 6px;
+				}
+			}
+		}
+	}	
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.list-item {
+  @include border-radius(9px);
+	text-align: left;
+	color: #fff;
+  padding: 3px;
+  background-color: #444b69;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.actions {
+	text-align: center;
+	margin-top: 30px;
 }
 
-.App-title {
-  font-size: 1.5em;
-}
+.do {
+	@include border-radius(33px);
+	@include transition(box-shadow, 0.09s, ease);
+	@include box-shadow(0.6px, 0.6px, 0.6px, #111);
+	text-decoration: none;
+	display: inline-block;
+	padding: 9px 27px;
+	font-size: 14px;
+	margin: 0 !important;
+	background-color: #c9c9c9;
+	color: #0d1138;
+	border: solid 1px #444b69;
 
-.App-intro {
-  font-size: large;
-}
+	&.do-secondary {
+		background-color: #fad744;
+		color: #fefeff;
+	}
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+	&.do-success {
+		background-color: #0d1138;
+		color: #fad744;
+	}
+
+	&:hover {
+		@include box-shadow(2px, 2px, 2px, #111);
+		cursor: pointer;
+	}
+	
+	&.circular {
+		@include border-radius(50%);
+		border: solid 1px violet;
+	}
 }

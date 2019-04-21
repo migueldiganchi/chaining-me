@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './compiled/App.css';
+
+import Header from './components/Header'
+import Board from './components/Board'
+import BoardPanel from './components/BoardPanel'
+import AuthorManager from './components/Authors/AuthorManager';
+import PublicationList from './components/Publications/PublicationList'
 
 class App extends Component {
   constructor() {
     super();
-
-    this.state = {};
   }
 
   componentDidMount() {
-    this.callApi()
+    /*this.callApi()
       .then(res => this.setState(res))
-      .catch(console.error);
+      .catch(console.error);*/
   }
 
-  callApi = async () => {
+  /*callApi = async () => {
     const resp = await fetch('/api');
 
     window._resp = resp;
@@ -34,19 +37,71 @@ class App extends Component {
     }
 
     return data;
+  };*/
+
+  state = {
+    publications: [{
+      id: 1,
+      title: "Story nº 1",
+      body: "Publication longer content and description",
+      date_time: "May 8, 1982"
+    }, {
+      id: 2,
+      title: "Story nº 2",
+      body: "Publication longer content and description",
+      date_time: "May 30, 1982"
+    }, {
+      id: 3,
+      title: "Story nº 3",
+      body: "Publication longer content and description",
+      date_time: "May 21, 1982"
+    }, {
+      id: 4,
+      title: "Story nº 4",
+      body: "Publication longer content and description",
+      date_time: "May 21, 1982"
+    }, {
+      id: 5,
+      title: "Story nº 5",
+      body: "Publication longer content and description",
+      date_time: "May 21, 1982"
+    }, {
+      id: 6,
+      title: "Story nº 6",
+      body: "Publication longer content and description",
+      date_time: "May 21, 1982"
+    }, {
+      id: 7,
+      title: "Story nº 7",
+      body: "Publication longer content and description",
+      date_time: "May 21, 1982"
+    }, {
+      id: 8,
+      title: "Story nº 8",
+      body: "Publication longer content and description",
+      date_time: "May 21, 1982"
+    }, {
+      id: 9,
+      title: "Story nº 9",
+      body: "Publication longer content and description",
+      date_time: "May 21, 1982"
+    }]
   };
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>{this.state.message || 'No message'}</p>
+        <Header 
+          title="Welcome to Chaining-me.Text"
+          introduction="The new way of doing art, with posts" />
+        <AuthorManager />
+        <Board>
+          <BoardPanel 
+            title="Publications"
+            total={this.state.publications.length}>
+            <PublicationList publications={this.state.publications} />
+          </BoardPanel>
+        </Board>
       </div>
     );
   }

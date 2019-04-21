@@ -1,0 +1,27 @@
+@import './../../assets/styles/_mixins';
+
+.author-list {
+    flex-wrap: wrap; /* Grid Fallback */
+  /* Supports Grid */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+    grid-gap: 9px;
+    height: initial;
+    text-align: center;
+    .list-item {
+        @include box-shadow(1px, 1px, 1px, #111111);
+        @include transition(box-shadow, 0.3s, ease);
+        text-align: center;
+        margin: 0;
+        padding: 12px;
+        h4, p {
+            margin: 0;
+        }
+        h4 { font-size: 13px;}
+        p {font-size: 11px;}
+        &:hover {
+            @include box-shadow(2px, 2px, 2px, #111111);
+            cursor: pointer;
+        }
+    }
+}
