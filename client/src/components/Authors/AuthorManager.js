@@ -70,43 +70,43 @@ class AuthorManager extends Component {
   }
 
   render () {
-    let keypadContent = !this.state.isDashboardVisible ? (
-      <a href="#"
-        className="do do-success"
-        onClick={this.toggleManager}>
-        Authors
-      </a>
-    ) : [
-      <a href="#"
-        key="1"
-        className="do do-success do-circular"
-        onClick={this.toggleManager}>
-        <i className="fas fa-times" />
-      </a>, 
-      <a href="#"
-        key="2"
-        className="do do-success"
-        onClick={this.toggleManager}>
-        <i className="fas fa-plus" />
-        Author
-      </a>
-      ];
-      
     let commanderClassName = this.state.isDashboardVisible ? 
       'App-commander opened' : 
       'App-commander';
 
+    let keypadContent = !this.state.isDashboardVisible ? (
+        <a href="#"
+          className="do do-success"
+          onClick={this.toggleManager}>
+          Authors
+        </a>
+      ) : [
+        <a href="#"
+          key="1"
+          className="do do-success do-circular"
+          onClick={this.toggleManager}>
+          <i className="fas fa-times" />
+        </a>, 
+        <a href="#"
+          key="2"
+          className="do do-success"
+          onClick={this.toggleManager}>
+          <i className="fas fa-plus" />
+          Author
+        </a>
+      ];
+
     return (
       <div className={commanderClassName}>  
-        <div className="logo">   
-          <img src={bot} />
-        </div>
         <div className="keypad">
           {keypadContent}
         </div>
         <div className="dashboard">
           <div className="dashboard-top">
-            <h5>Authors <small>{this.state.authors.length}</small></h5>
+            <h5>
+              Authors 
+              <small>{this.state.authors.length}</small>
+            </h5>
           </div>
           <AuthorList 
             authors={this.state.authors}

@@ -12,7 +12,44 @@
 		background-color: #ef5455;
 		color: #2b3252;
 		padding: 21px;
-		padding-top: 72px;
+		padding-bottom: 54px;
+		margin-bottom: 27px;
+	}
+
+	.App-searcher {
+		@include border-radius(9px);
+		@include box-shadow(1px, 1px, 1px, #111);
+		background-color: #444b69;
+		padding: 9px;
+		margin-top: -60px;
+		form {
+			@include transition(box-shadow, 0.3s, ease);
+			@include border-radius(9px);
+			background-color: #2b3252;
+			position: relative;
+			padding: 12px 15px !important;
+			input[type=text] {
+				background-color: #2b3252;
+				font-size: 15px;
+				outline: none;
+				color: #fad744;
+				border: none;
+				width: 100%;
+				&::placeholder {
+					color: #586083;
+				}
+			}
+			button {
+				position: absolute;
+				top: 7px;
+				right: 8px;
+			}
+		}
+
+		// App-searcher
+		&.active {
+			@include box-shadow(2px, 2px, 2px, #111);
+		}
 	}
 
 	.App-commander {
@@ -25,13 +62,13 @@
 		.logo {
 			@include transition(margin-left, 0.3s, ease);
 			margin: 0;
-			display: inline-block;
+			float: left;
 			margin-right: 9px;
 			margin-left: -300px;
 			img {
 				@include border-radius(50%);
-				width: 57px;
-				height: 57px;
+				width: 54px;
+				height: 54px;
 			}
 		}
 		
@@ -83,8 +120,13 @@
 				margin-left: 0 !important;
 			}
 
+			.keypad {
+				float: right;
+			}
+
 			.dashboard {
 				left: 0;
+				top: 60px;
 			}
 		}
 	}
@@ -113,9 +155,10 @@
 }
 
 .paginator {
+	text-align: center;
 	.keypad {
 		display: inline-block;
-		float: none;
+		float: none !important;
 		.do-circular {
 			font-size: 12px;
 		}
@@ -126,7 +169,6 @@
 	@include border-radius(30px);
 	@include bg-tr;
 	padding: 7.2px;
-	float: right;
 
 	.do, .text {
 		margin-right: 7.2px !important;
@@ -155,9 +197,10 @@
 	@include border-radius(33px);
 	@include transition(box-shadow, 0.09s, ease);
 	@include box-shadow(0.6px, 0.6px, 0.6px, #111);
+	outline: none;
 	text-decoration: none;
 	display: inline-block;
-	padding: 9px 21px 9px 27px;
+	padding: 9px 21px 9px;
 	font-size: 14px;
 	margin: 0 !important;
 	background-color: #444b69;
@@ -174,7 +217,9 @@
 		color: #fad744;
 	}
 
-	&:hover {
+	&:hover,
+	&:active,
+	&.active {
 		@include box-shadow(2px, 2px, 2px, #111);
 		cursor: pointer;
 	}
@@ -189,7 +234,7 @@
 	}
 
 	&:not(.do-circular) .fas {
-		margin-left: -12px;
-		margin-right: 15px;
+		margin-left: -9px;
+		margin-right: 9px;
 	}
 }

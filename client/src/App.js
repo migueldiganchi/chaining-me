@@ -3,6 +3,7 @@ import './compiled/App.css';
 
 import Header from './components/Header'
 import Board from './components/Board'
+import Searcher from './components/Searcher';
 import BoardPanel from './components/BoardPanel'
 import AuthorManager from './components/Authors/AuthorManager';
 import PublicationList from './components/Publications/PublicationList'
@@ -88,6 +89,11 @@ class App extends Component {
     }]
   };
 
+  goSearch = (e, term) => {
+    e.preventDefault();
+    console.log('doing search! :D', e);
+  }
+
   onFirstPage = (e) => {
     e.preventDefault();
     console.log('@todo: publications next page');
@@ -105,7 +111,7 @@ class App extends Component {
 
   onLastPage = (e) => {
     e.preventDefault();
-    console.log('@todo: publications last page');
+    console.log('@todo: publications last page', e);
   }
 
   render() {
@@ -116,6 +122,7 @@ class App extends Component {
           introduction="The new way of doing art, with posts" />
         <AuthorManager />
         <Board>
+          <Searcher onSearch={this.goSearch} />
           <BoardPanel
             title="Publications"
             total={this.state.publications.length}>
