@@ -29,15 +29,9 @@
 			position: relative;
 			padding: 12px 15px !important;
 			input[type=text] {
-				background-color: #2b3252;
 				font-size: 15px;
-				outline: none;
+				background-color: #2b3252;
 				color: #fad744;
-				border: none;
-				width: 100%;
-				&::placeholder {
-					color: #586083;
-				}
 			}
 			button {
 				position: absolute;
@@ -121,7 +115,7 @@
 			}
 
 			.keypad {
-				float: right;
+				display: inline-block;
 			}
 
 			.dashboard {
@@ -154,6 +148,43 @@
 	}	
 }
 
+form {
+	input {
+		outline: none;
+		border: none;
+		width: 100%;
+		&::placeholder {
+			color: #586083;
+		}
+	}
+}
+
+.form {
+	.field {
+		background-color: #586083;
+		@include border-radius(9px);
+		padding: 6px;
+		margin-bottom: 6px;
+		&:last-child {
+			margin-bottom: 0;
+		}
+		input {
+			@include border-radius(6px);
+			background-color: #2b3252;
+			color: #fff;
+			padding: 6px 9px;
+			-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+			-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+			box-sizing: border-box;
+			font-size: 14px;
+			display: inline-block !important;
+		}
+	}
+	.keypad {
+		margin-top: 15px;
+	}
+}
+
 .paginator {
 	text-align: center;
 	.keypad {
@@ -181,6 +212,7 @@
 		display: inline-block;
 		color: #fff;
 		font-size: 11px;
+		line-height: 33px;
 		text-shadow: 1px 1px 1px #333;
 	}
 }
