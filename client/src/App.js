@@ -41,6 +41,7 @@ class App extends Component {
   };*/
 
   state = {
+    isAuthorManagerVisible: false,
     publications: [{
       id: 1,
       title: "Story nº 1",
@@ -94,44 +95,62 @@ class App extends Component {
     console.log('doing search! :D', e);
   }
 
-  onFirstPage = (e) => {
+  goFirstPage = (e) => {
     e.preventDefault();
     console.log('@todo: publications next page');
   }
 
-  onPreviousPage = (e) => {
+  goPreviousPage = (e) => {
     e.preventDefault();
     console.log('@todo: publications previous page');
   }
 
-  onNextPage = (e) => {
+  goNextPage = (e) => {
     e.preventDefault();
     console.log('@todo: publications next page');
   }
 
-  onLastPage = (e) => {
+  goLastPage = (e) => {
     e.preventDefault();
     console.log('@todo: publications last page', e);
   }
 
+  toggleManager = () => {
+    this.setState({
+      isAuthorManagerVisible: !this.state.isAuthorManagerVisible
+    });
+  }
+
   render() {
+    let glassApp = this.state.isAuthorManagerVisible ? (
+      <div className="App-glass"
+        onClick={this.toggleManager}></div>
+    ) : null;
+
     return (
       <div className="App">
+        {glassApp}
         <Header
           title="Welcome to Chaining-me.Text"
-          introduction="The new way of doing art, with posts" />
-        <AuthorManager />
+          introduction="The new way of doing art, with posts" 
+          />
+        <AuthorManager 
+          onToggleManager={this.toggleManager}
+          isAuthorManagerVisible={this.state.isAuthorManagerVisible} 
+          />
         <Board>
-          <Searcher onSearch={this.goSearch} />
+          <Searcher 
+            onSearch={this.goSearch} 
+            />
           <BoardPanel
             title="Publications"
             total={this.state.publications.length}>
             <PublicationList
               publications={this.state.publications}
-              onFirst={this.onFirstPage}
-              onPrevious={this.onPreviousPage}
-              onNext={this.onNextPage}
-              onLast={this.onLastPage}
+              onFirst={this.goFirstPage}
+              onPrevious={this.goPreviousPage}
+              onNext={this.goNextPage}
+              onLast={this.goLastPage}
             />
           </BoardPanel>
         </Board>

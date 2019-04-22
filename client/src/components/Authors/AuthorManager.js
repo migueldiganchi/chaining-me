@@ -5,7 +5,6 @@ import AuthorForm from './AuthorForm'
 
 class AuthorManager extends Component {
   state = {
-    isDashboardVisible: false,
     newAuthor: null,
     author: null,
     authors: [{
@@ -40,12 +39,6 @@ class AuthorManager extends Component {
       email: "name@gmail.com",
       birth_date: "May 21, 1992"
     }]
-  }
-
-  toggleManager = () => {
-    this.setState({
-      isDashboardVisible: !this.state.isDashboardVisible
-    });
   }
 
   goAuthor = (author) => {
@@ -101,7 +94,7 @@ class AuthorManager extends Component {
   }
 
   render () {
-    let commanderClassName = this.state.isDashboardVisible ? 
+    let commanderClassName = this.props.isAuthorManagerVisible ? 
       'App-commander opened' : 
       'App-commander';
 
@@ -116,12 +109,12 @@ class AuthorManager extends Component {
     }
 
     let commanderKeypad = null;
-    if (this.state.isDashboardVisible) {
+    if (this.props.isAuthorManagerVisible) {
       commanderKeypad = [
         <a href="#"
           key="1"
           className="do do-success do-circular"
-          onClick={this.toggleManager}>
+          onClick={this.props.onToggleManager}>
           <i className="fas fa-hand-point-left" />
         </a>, 
         (!commanderAuthor ? <a href="#"
@@ -135,14 +128,14 @@ class AuthorManager extends Component {
     } else {
       commanderKeypad = <a href="#"
         className="do do-success"
-        onClick={this.toggleManager}>
+        onClick={this.props.onToggleManager}>
         <i className="fas fa-hand-point-right" />
-        Authors
+        Author Manager
       </a>
     }
 
     let commanderTop = commanderAuthor ? (
-      <h5>
+      <h5 className="centered">
         {commanderAuthorTitle}
       </h5>
     ) : (
@@ -166,7 +159,7 @@ class AuthorManager extends Component {
         />;
 
     return (
-      <div className={commanderClassName}>  
+      <div className={commanderClassName}>
         <div className="keypad">
           {commanderKeypad}
         </div>
