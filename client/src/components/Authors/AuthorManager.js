@@ -50,9 +50,15 @@ class AuthorManager extends Component {
     }, 3000);
   };
 
+  saveAuthor = (author) => {
+    console.log("saving author?", author);
+    this.props.onNotify("Author saved successfuly");
+    this.cancelForm();
+  };
+
   openNewAuthorForm = () => {
     console.log("on new button clicked");
-  }
+  };
 
   createAuthor = () => {
     this.setState({
@@ -63,35 +69,34 @@ class AuthorManager extends Component {
         birth_date: ''
       }
     });
-  }
+  };
 
   cancelForm = () => {
-    console.log("cancel author form");
     this.setState({
       newAuthor: null,
       author: null
     });
-  }
+  };
 
   onFirstPage = (e) => {
     e.preventDefault();
     console.log('@todo: next page');
-  }
+  };
   
   onPreviousPage = (e) => {
     e.preventDefault();
     console.log('@todo: previous page');
-  }
+  };
 
   onNextPage = (e) => {
     e.preventDefault();
     console.log('@todo: next page');
-  }
+  };
 
   onLastPage = (e) => {
     e.preventDefault();
     console.log('@todo: last page');
-  }
+  };
 
   render () {
     let commanderClassName = this.props.isAuthorManagerVisible ? 
@@ -148,6 +153,7 @@ class AuthorManager extends Component {
     let commanderBody = commanderAuthor ? 
       <AuthorForm 
         author={commanderAuthor}
+        onSave={this.saveAuthor}
         onCancel={this.cancelForm} /> :
       <AuthorList 
         authors={this.state.authors}

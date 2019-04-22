@@ -14,34 +14,8 @@ class App extends Component {
     super();
   }
 
-  componentDidMount() {
-    /*this.callApi()
-      .then(res => this.setState(res))
-      .catch(console.error);*/
-  }
-
-  /*callApi = async () => {
-    const resp = await fetch('/api');
-
-    window._resp = resp;
-
-    let text = await resp.text();
-
-    let data = null;
-    try {
-      data = JSON.parse(text); // cannot call both .json and .text - await resp.json();
-    } catch (e) {
-      console.err(`Invalid json\n${e}`);
-    }
-
-    if (resp.status !== 200) {
-      throw Error(data ? data.message : 'No data');
-    }
-
-    return data;
-  };*/
-
   state = {
+    notification: null,
     isAuthorManagerVisible: false,
     publications: [{
       id: 1,
@@ -91,6 +65,13 @@ class App extends Component {
     }]
   };
 
+  componentDidMount() {
+    // this.notifyError("Hello!");
+    /*this.callApi()
+      .then(res => this.setState(res))
+      .catch(console.error);*/
+  }
+
   goSearch = (e, term) => {
     e.preventDefault();
     console.log('doing search! :D', e);
@@ -122,6 +103,49 @@ class App extends Component {
     });
   }
 
+  notify = (message, messageType, messageTimeout, afterNotify) => {
+    this.setState({
+      notification: {
+        message: message,
+        type: messageType ? messageType : 'info'
+      }
+    });
+
+    setTimeout(() => {
+      this.stopNotify();
+    }, messageTimeout || 3000);
+  }
+
+  notifyError = (message) => {
+    console.log(message);
+    this.notify(message, 'error');
+  };
+
+  stopNotify = () => {
+    this.setState({notification: null});
+  };
+
+  /*callApi = async () => {
+    const resp = await fetch('/api');
+
+    window._resp = resp;
+
+    let text = await resp.text();
+
+    let data = null;
+    try {
+      data = JSON.parse(text); // cannot call both .json and .text - await resp.json();
+    } catch (e) {
+      console.err(`Invalid json\n${e}`);
+    }
+
+    if (resp.status !== 200) {
+      throw Error(data ? data.message : 'No data');
+    }
+
+    return data;
+  };*/
+
   render() {
     let glassApp = this.state.isAuthorManagerVisible ? (
       <div className="App-glass"
@@ -137,7 +161,8 @@ class App extends Component {
           />
         <AuthorManager 
           onToggleManager={this.toggleManager}
-          isAuthorManagerVisible={this.state.isAuthorManagerVisible} 
+          isAuthorManagerVisible={this.state.isAuthorManagerVisible}
+          onNotify={this.notify}
           />
         <Board>
           <Searcher 
@@ -155,7 +180,7 @@ class App extends Component {
             />
           </BoardPanel>
         </Board>
-        <Notifier notification={{message: 'Author added successfuly'}} />
+        <Notifier notification={this.state.notification} />
       </div>
     );
   }

@@ -1,29 +1,25 @@
 import React from 'react';
 
+import botTalking from './../assets/media/bot-talking.gif';
+
 const Notifier = (props) => {
-  
   let message = props.notification ? props.notification.message : null;
   let type = props.notification ? props.notification.type : "";
-
-  let notifierClass = props.notification ? 
+  let notifierClass = message ? 
     'App-notifier active ' + type : 
     'App-notifier';
-
   let notificationMessage = message ? 
-    <div className="text">
-      {message}
+    <div className="keypad">
+      <div className="text">
+        {message}
+      </div> 
     </div> : null;
 
   return(
     <div className={notifierClass}>
-      <div className="keypad">
-        {notificationMessage}
-        <button type="button"
-          className="do do-primary do-circular">
-          <i className="fas fa-times" />
-        </button>
-      </div>
-      <div className="logo">
+      {notificationMessage}
+      <div className="bot">
+        <img src={botTalking} alt={message} />
       </div>
     </div>
   );

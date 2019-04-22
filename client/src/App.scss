@@ -23,18 +23,50 @@
 	}
 
 	.App-notifier {
+		@include transition(right, 0.03s, ease);
 		position: fixed;
+		z-index: 999;
 		bottom: 15px;
 		right: -320px;
-		@include transition(right, 0.3s, ease);
+
 		.keypad {
+			float: left;
 			.text {
-				padding-left: 12px;
+				padding: 0 12px;
 			}
+		}
+
+		.bot {
+			@include border-radius(50%);
+			float: right;
+			margin-left: 6px;
+			&, img {
+				height: 45px;
+				width: 45px;
+				line-height: 45px;
+			}
+			padding: 0 !important;
+			img {
+				margin: 0 !important;
+			}
+		}
+		
+		.keypad {
+			@include box-shadow(1px, 1px, 1px, #111);
+			background-color: #111 !important;
+			border: solid 1px #999;
 		}
 
 		&.active {
 			right: 15px;
+		}
+
+		&.error {
+			.keypad {
+				background-color: #ef5455 !important;
+				color: #fff;
+				* {color: #fff;}
+			}
 		}
 	}
 	
