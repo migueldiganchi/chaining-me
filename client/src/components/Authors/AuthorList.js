@@ -1,6 +1,7 @@
 import React from 'react';
 
 import AuthorListItem from './AuthorListItem';
+import Paginator from './../Paginator';
 
 import './../../compiled/components/Authors/Authors.css';
 
@@ -15,6 +16,11 @@ const AuthorList = (props) => {
             onAuthorOpen={props.onAuthorOpen} />);
         })}
       </div>
+      <Paginator 
+        onFirst={props.onFirst}
+        onPrevious={props.onPrevious}
+        onNext={props.onNext}
+        onLast={props.onLast} />
     </div>
   );
 };

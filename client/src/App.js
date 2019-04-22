@@ -88,18 +88,44 @@ class App extends Component {
     }]
   };
 
+  onFirstPage = (e) => {
+    e.preventDefault();
+    console.log('@todo: publications next page');
+  }
+
+  onPreviousPage = (e) => {
+    e.preventDefault();
+    console.log('@todo: publications previous page');
+  }
+
+  onNextPage = (e) => {
+    e.preventDefault();
+    console.log('@todo: publications next page');
+  }
+
+  onLastPage = (e) => {
+    e.preventDefault();
+    console.log('@todo: publications last page');
+  }
+
   render() {
     return (
       <div className="App">
-        <Header 
+        <Header
           title="Welcome to Chaining-me.Text"
           introduction="The new way of doing art, with posts" />
         <AuthorManager />
         <Board>
-          <BoardPanel 
+          <BoardPanel
             title="Publications"
             total={this.state.publications.length}>
-            <PublicationList publications={this.state.publications} />
+            <PublicationList
+              publications={this.state.publications}
+              onFirst={this.onFirstPage}
+              onPrevious={this.onPreviousPage}
+              onNext={this.onNextPage}
+              onLast={this.onLastPage}
+            />
           </BoardPanel>
         </Board>
       </div>

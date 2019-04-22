@@ -49,10 +49,49 @@ class AuthorManager extends Component {
     console.log("on new button clicked");
   }
 
+  onFirstPage = (e) => {
+    e.preventDefault();
+    console.log('@todo: next page');
+  }
+  
+  onPreviousPage = (e) => {
+    e.preventDefault();
+    console.log('@todo: previous page');
+  }
+
+  onNextPage = (e) => {
+    e.preventDefault();
+    console.log('@todo: next page');
+  }
+
+  onLastPage = (e) => {
+    e.preventDefault();
+    console.log('@todo: last page');
+  }
+
   render () {
-    let commanderMenuText = this.state.isDashboardVisible ? 
-      'Close' : 
-      "Authors";
+    let keypadContent = !this.state.isDashboardVisible ? (
+      <a href="#"
+        className="do do-success"
+        onClick={this.toggleManager}>
+        Authors
+      </a>
+    ) : [
+      <a href="#"
+        key="1"
+        className="do do-success do-circular"
+        onClick={this.toggleManager}>
+        <i className="fas fa-times" />
+      </a>, 
+      <a href="#"
+        key="2"
+        className="do do-success"
+        onClick={this.toggleManager}>
+        <i className="fas fa-plus" />
+        Author
+      </a>
+      ];
+      
     let commanderClassName = this.state.isDashboardVisible ? 
       'App-commander opened' : 
       'App-commander';
@@ -63,20 +102,20 @@ class AuthorManager extends Component {
           <img src={bot} />
         </div>
         <div className="keypad">
-          <a href="#"
-            className="do do-success"
-            onClick={this.toggleManager}>{commanderMenuText}</a>
+          {keypadContent}
         </div>
         <div className="dashboard">
           <div className="dashboard-top">
             <h5>Authors <small>{this.state.authors.length}</small></h5>
-            <a href="#"
-              className="do do-success"
-              onClick={this.openNewAuthorForm}>New</a>
           </div>
           <AuthorList 
             authors={this.state.authors}
-            onAuthorOpen={this.goAuthor} />
+            onAuthorOpen={this.goAuthor}
+            onFirst={this.onFirstPage} 
+            onPrevious={this.onPreviousPage} 
+            onNext={this.onNextPage} 
+            onLast={this.onLastPage} 
+            />
         </div>
       </div>
     );

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PublicationListItem from './PublicationListItem';
+import Paginator from './../Paginator';
 
 import '../../compiled/components/Publications/Publications.css';
 
@@ -12,10 +13,11 @@ const PublicationList = (props) => {
           return <PublicationListItem key={publication.id} publication={publication} />
         })}
       </div>
-      <div className="actions">
-        <a href="#"
-          className="do">Load more publications</a>
-      </div>
+      <Paginator 
+        onFirst={props.onFirst}
+        onPrevious={props.onPrevious}
+        onNext={props.onNext}
+        onLast={props.onLast} />
     </div>
   );
 };
