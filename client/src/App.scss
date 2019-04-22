@@ -21,6 +21,22 @@
 			filter: blur(100px);
 		}
 	}
+
+	.App-notifier {
+		position: fixed;
+		bottom: 15px;
+		right: -320px;
+		@include transition(right, 0.3s, ease);
+		.keypad {
+			.text {
+				padding-left: 12px;
+			}
+		}
+
+		&.active {
+			right: 15px;
+		}
+	}
 	
 	.App-header {
 		background-color: #ef5455;

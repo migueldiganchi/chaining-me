@@ -4,6 +4,7 @@ import './compiled/App.css';
 import Header from './components/Header'
 import Board from './components/Board'
 import Searcher from './components/Searcher';
+import Notifier from './components/Notifier';
 import BoardPanel from './components/BoardPanel'
 import AuthorManager from './components/Authors/AuthorManager';
 import PublicationList from './components/Publications/PublicationList'
@@ -154,6 +155,7 @@ class App extends Component {
             />
           </BoardPanel>
         </Board>
+        <Notifier notification={{message: 'Author added successfuly'}} />
       </div>
     );
   }
