@@ -9,6 +9,7 @@ import '../../compiled/components/Publications/Publications.css';
 const PublicationList = (props) => {
 
   let newForm = null;
+  let paginator = null;
 
   if (props.newPublication) {
     newForm = <PublicationForm 
@@ -18,31 +19,39 @@ const PublicationList = (props) => {
       />
   }
 
+  if (!props.newPublication && !props.editingPublication) {
+    paginator = <Paginator 
+      onFirst={props.onFirst}
+      onPrevious={props.onPrevious}
+      onNext={props.onNext}
+      onLast={props.onLast} 
+      />
+  }
+
   return (
     <div className="list-container">
       {newForm}
       <div className="publication-list">
         {props.publications.map((publication) => {
-          return props.publication && props.publication.id === publication.id ? 
+          return props.editingPublication && props.editingPublication.id === publication.id ? 
             <PublicationForm 
               key={publication.id}
-              publication={publication}
+              publication={props.editingPublication}
               onCancel={props.onCancel}
               onSave={props.onSave}
               /> : 
             <PublicationListItem 
               key={publication.id}
               publication={publication}
+              isRemoving={props.removingPublication && props.removingPublication.id === publication.id}
               onEdit={props.onEdit}
-              onPublicationOpen={props.onPublicationOpen} />
+              onStartRemoving={props.onStartRemoving}
+              onConfirmRemoving={props.onConfirmRemoving}
+              onCancelRemoving={props.onCancelRemoving}
+              onOpen={props.onOpen} />
         })}
       </div>
-      <Paginator 
-        onFirst={props.onFirst}
-        onPrevious={props.onPrevious}
-        onNext={props.onNext}
-        onLast={props.onLast} 
-        />
+      {paginator}
     </div>
   );
 };

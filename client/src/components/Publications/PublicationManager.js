@@ -8,6 +8,7 @@ class PublicationManager extends Component {
   state = {
     newPublication: null,
     publication: null,
+    removingPublication: null,
     publications: []
   };
 
@@ -48,6 +49,7 @@ class PublicationManager extends Component {
 
   searchPublications = (term) => {
     console.log('doing search! :D', term);
+    this.props.onNotify("@todo: Doing publication search");
   };
   
   goPublication(publication) {
@@ -68,9 +70,30 @@ class PublicationManager extends Component {
   editPublication = (publication) => {
     console.log('editing publication', publication);
     this.setState({
-      publication: publication
+      editingPublication: publication
     });
-  }
+  };
+
+  startRemoving = (publication) => {
+    console.log('removing publication', publication);
+    this.setState({
+      removingPublication: publication
+    });
+  };
+
+  removePublication = (publication) => {
+    console.log('do effective the removing of this publication: ', publication);
+    setTimeout(() => {
+      this.props.onNotify('Publication removed successfuly');
+      this.cancelRemoving();
+    }, 3000);
+  };
+
+  cancelRemoving = () => {
+    this.setState({
+      removingPublication: null
+    });
+  };
 
   savePublication = (publication) => {
     console.log('publication', publication);
@@ -80,51 +103,56 @@ class PublicationManager extends Component {
 
   cancelPublicationForm = () => {
     this.setState({
-      publication: null,
-      newPublication: null
+      newPublication: null,
+      editingPublication: null,
+      removingPublication: null
     });
   };
 
   render () {
+    let searcher = null;
     let keypadTitle = null;
-    let buttonStyle = {
-      visibility: this.state.publication ? 'hidden' : 'visible'
-    };
     
-    if (!this.state.newPublication) {
-      keypadTitle = (<div className="keypad board-panel-keypad">
-        <div className="text">
-          <span>Publications</span>
-          <small>{this.state.publications.length} results</small>
+    if (!this.state.newPublication && !this.state.editingPublication) {
+      searcher = <Searcher 
+        onSearch={this.searchPublications} 
+        />;
+      keypadTitle = (
+        <div className="keypad board-panel-keypad">
+          <div className="text">
+            <span>Publications</span>
+            <small>{this.state.publications.length} results</small>
+          </div>
+          <a href="#"
+            className="do do-success"
+            onClick={this.createPublication}>
+            <i className="fas fa-plus" />
+            Publication
+          </a>
         </div>
-        <a href="#"
-          style={buttonStyle} 
-          className="do do-success"
-          onClick={this.createPublication}>
-          <i className="fas fa-plus" />
-          Publication
-        </a>
-      </div>);
+      );
     }
 
     return (
       <div>
-        <Searcher 
-          onSearch={this.searchPublications} 
-          />
+        {searcher}
         {keypadTitle}
         <PublicationList
           newPublication={this.state.newPublication}
-          publication={this.state.publication}
+          editingPublication={this.state.editingPublication}
+          removingPublication={this.state.removingPublication}
           publications={this.state.publications}
           onFirst={this.goFirstPage}
           onPrevious={this.goPreviousPage}
           onNext={this.goNextPage}
           onLast={this.goLastPage}
           onSave={this.savePublication}
-          onPublicationOpen={this.goPublication}
+          onOpen={this.goPublication}
           onCancel={this.cancelPublicationForm}
           onEdit={this.editPublication}
+          onStartRemoving={this.startRemoving}
+          onConfirmRemoving={this.removePublication}
+          onCancelRemoving={this.cancelRemoving}
           />
       </div>
     );

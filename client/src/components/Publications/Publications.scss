@@ -10,5 +10,27 @@
             padding: 6px 0 6px;
             font-size: 15px;
         }
+
+        .keypad:not(.confirmation) {
+            bottom: 6px;
+            right: 6px;
+        }
+
+        .keypad.confirmation {
+            position: absolute;
+            right: 6px;
+            top: 6px;
+            padding: 0 12px;
+            bottom: initial;
+            margin: 0;
+            h1, h2, h3, h4, h5 {
+                text-align: right;
+                font-size: 14px;
+                line-height: 27px;
+                padding: 9px 3px !important;
+                margin: 0 !important;
+                line-height: initial !important;
+            }
+        }
     }
 }
