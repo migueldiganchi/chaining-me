@@ -53,7 +53,7 @@ class AuthorManager extends Component {
   saveAuthor = (author) => {
     console.log("saving author?", author);
     this.props.onNotify("Author saved successfuly");
-    this.cancelForm();
+    this.cancelAuthorForm();
   };
 
   openNewAuthorForm = () => {
@@ -71,7 +71,7 @@ class AuthorManager extends Component {
     });
   };
 
-  cancelForm = () => {
+  cancelAuthorForm = () => {
     this.setState({
       newAuthor: null,
       author: null
@@ -154,7 +154,7 @@ class AuthorManager extends Component {
       <AuthorForm 
         author={commanderAuthor}
         onSave={this.saveAuthor}
-        onCancel={this.cancelForm} /> :
+        onCancel={this.cancelAuthorForm} /> :
       <AuthorList 
         authors={this.state.authors}
         onAuthorOpen={this.goAuthor}

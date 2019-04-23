@@ -7,7 +7,8 @@ import Searcher from './components/Searcher';
 import Notifier from './components/Notifier';
 import BoardPanel from './components/BoardPanel'
 import AuthorManager from './components/Authors/AuthorManager';
-import PublicationList from './components/Publications/PublicationList'
+import PublicationList from './components/Publications/PublicationList';
+import PublicationForm from './components/Publications/PublicationForm';
 
 class App extends Component {
   constructor() {
@@ -17,6 +18,8 @@ class App extends Component {
   state = {
     notification: null,
     isAuthorManagerVisible: false,
+    newPublication: null,
+    publication: null,
     publications: [{
       id: 1,
       title: "Story nº 1",
@@ -125,6 +128,18 @@ class App extends Component {
     this.setState({notification: null});
   };
 
+  savePublication = (publication) => {
+    console.log('publication', publication);
+    this.notify('Publication saved successfuly');
+  }
+
+  cancelPublicationForm = () => {
+    this.setState({
+      publication: null,
+      newPublication: null
+    });
+  };
+
   /*callApi = async () => {
     const resp = await fetch('/api');
 
@@ -171,13 +186,17 @@ class App extends Component {
           <BoardPanel
             title="Publications"
             total={this.state.publications.length}>
+            <PublicationForm 
+              onCancel={this.cancelPublicationForm}
+              onSave={this.savePublication}
+              />
             <PublicationList
               publications={this.state.publications}
               onFirst={this.goFirstPage}
               onPrevious={this.goPreviousPage}
               onNext={this.goNextPage}
               onLast={this.goLastPage}
-            />
+              />
           </BoardPanel>
         </Board>
         <Notifier notification={this.state.notification} />
