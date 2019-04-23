@@ -32,7 +32,8 @@ const PublicationList = (props) => {
               /> : 
             <PublicationListItem 
               key={publication.id}
-              publication={publication} />
+              publication={publication}
+              onEdit={props.onEdit} />
         })}
       </div>
       <Paginator 

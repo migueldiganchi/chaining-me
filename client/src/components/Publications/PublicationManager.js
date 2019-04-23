@@ -91,7 +91,7 @@ class PublicationManager extends Component {
   };
 
   editPublication = (publication) => {
-    console.log('creating publication', publication);
+    console.log('editing publication', publication);
     this.setState({
       publication: publication
     });
@@ -137,7 +137,7 @@ class PublicationManager extends Component {
           onLast={this.goLastPage}
           onSave={this.savePublication}
           onCancel={this.cancelPublicationForm}
-          onEditPublication={this.editPublication}
+          onEdit={this.editPublication}
           />
       </div>
     );

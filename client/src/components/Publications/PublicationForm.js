@@ -26,8 +26,9 @@ class PublicationForm extends Component {
               placeholder="Title"  />
           </div>
           <div className="field">
-            <input type="text"
-              placeholder="Body" />
+            <textarea type="text"
+              rows="3"
+              placeholder="Publication body"></textarea>
           </div>
         </div>
 
