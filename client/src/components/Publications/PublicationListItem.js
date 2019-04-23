@@ -3,11 +3,13 @@ import React from 'react';
 function PublicationListItem (props) {
 
   const startRemovingHandler = (e) => {
+    e.preventDefault();
     props.onStartRemoving(props.publication)
     e.stopPropagation();
   };
 
   const confirmRemoving = (e) => {
+    e.preventDefault();
     props.onConfirmRemoving(props.publication);
     e.stopPropagation();
   }
@@ -18,6 +20,7 @@ function PublicationListItem (props) {
   }
   
   const editHander = (e) => {
+    e.preventDefault();
     props.onEdit(props.publication)
     e.stopPropagation();
   };

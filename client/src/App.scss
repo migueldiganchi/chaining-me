@@ -115,7 +115,7 @@
 		top: 15px;
 		left: 15px;
 		padding: 0;
-
+		
 		.logo {
 			@include transition(margin-left, 0.3s, ease);
 			margin: 0;
@@ -131,9 +131,11 @@
 		
 		.dashboard {
 			@include border-radius(21px);
-			@include transition(left, 0.3s, ease);
 			@include bg-tr;
-
+			
+			transition: left 0.3s ease, 
+				background-color 0.3s ease,
+				box-shadow 0.3s ease;
 			margin-top: 3px;
 			left: -300px;
 			position: absolute;
@@ -173,6 +175,21 @@
 				&:last-child {
 					margin-bottom: 0 !important;
 				}
+			}
+
+			&.confirmation {
+				@include box-shadow(1px, 1px, 1px, #333);
+				background-color: #ef5455 !important;
+				color: #fff;
+
+				.keypad {
+					margin-top: 15px;
+				}
+			}
+	
+			&.saving {
+				@include box-shadow(1px, 1px, 1px, #333);
+				background-color: #2b3252 !important;
 			}
 		}
 
@@ -307,31 +324,33 @@ form {
 .list-item {
 	@include box-shadow(1px, 1px, 1px, #111111);
 	@include border-radius(9px);
+	@include transition(background-color, 0.3s, ease);
 	text-align: left;
 	color: #fff;
   	padding: 3px;
 	background-color: #444b69;
 	position: relative;
+
+	&.removing {
+		background-color: #ef5455;
+	}
 	
 	.keypad {
-		// @include border-radii(9px, 0, 9px, 0);	
 		@include transition(visibility, 0.3s, ease);
 		@include transition(opacity, 0.3s, ease);
 		@include bg-tr;
-		padding: 4px;
-		visibility: hidden;
-		opacity: 0;
+		
+		&:not(.fixed) {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		display: inline-block;
 		position: absolute;
-		bottom: 3px;
-		right: 3px;
 		.do {
 			text-align: center;
-			font-size: 12px;
-			margin-right: 3px !important;
-			&:last-child {
-				margin-right: 0 !important;
-			}
 		}
+		
 	}
 
 	&:hover {
@@ -349,24 +368,33 @@ form {
 	@include transition(box-shadow, 0.09s, ease);
 	@include box-shadow(0.6px, 0.6px, 0.6px, #111);
 	outline: none;
+	border: solid 1px #cfcfcf;
 	text-decoration: none;
 	display: inline-block;
-	padding: 9px 21px 9px;
+	padding: 9px 21px;
 	font-size: 14px;
 	margin: 0 !important;
 	background-color: #444b69;
 	color: #fff;
-	border: solid 1px #444b69;
 
-	&.do-primary,
-	&.do-success {
+	&.do-primary {
 		background-color: #0d1138;
 		color: #fad744;
+	}
+
+	&.do-success {
+		background-color: #389638;
+		color: #fff;
 	}
 
 	&.do-secondary {
 		background-color: #fad744;
 		color: #fefeff;
+	}
+
+	&.do-warning {
+		background-color: #fad744;
+		color: #0d1138;
 	}
 
 	&.do-danger {

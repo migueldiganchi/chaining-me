@@ -2,10 +2,10 @@ import React from 'react';
 
 const AuthorListItem = (props) => {
 
-  const removeHandler = (e) => {
-    console.log('remove element');
+  const startRemovingHandler = (e) => {
+    props.onStartRemoving(props.author)
     e.stopPropagation();
-  }
+  };
 
   const editHandler = (e) => {
     props.onEdit(props.author)
@@ -23,7 +23,7 @@ const AuthorListItem = (props) => {
       <div className="keypad">
         <a href="#" 
           className="do do-circular do-danger"
-          onClick={removeHandler}>
+          onClick={startRemovingHandler}>
           <i className="fas fa-eraser" />
         </a>        
         <a href="#"

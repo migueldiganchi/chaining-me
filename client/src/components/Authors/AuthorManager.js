@@ -3,11 +3,13 @@ import axios from 'axios';
 
 import AuthorList from './AuthorList';
 import AuthorForm from './AuthorForm'
+import AuthorRemover from './AuthorRemover'
 
 class AuthorManager extends Component {
   state = {
     newAuthor: null,
-    author: null,
+    editingAuthor: null,
+    removingAuthor: null,
     authors: []
   }
 
@@ -34,7 +36,7 @@ class AuthorManager extends Component {
 
   editAuthor = (author) => {
     console.log("editing author?", author);
-    this.setState({author: author});
+    this.setState({editingAuthor: author});
   };
 
   createAuthor = () => {
@@ -51,8 +53,23 @@ class AuthorManager extends Component {
   cancelAuthorForm = () => {
     this.setState({
       newAuthor: null,
-      author: null
+      editingAuthor: null
     });
+  };
+
+  startRemoving = (author) => {
+    console.log("start removing with author: ", author);
+    this.setState({removingAuthor: author});
+  };
+
+  removeAuthor = (author) => {
+    console.log('Do effective the removing', author);
+    this.state.onNotify('@todo: Do effective the removing');
+  };
+
+  cancelRemoving = () => {
+    console.log('cancel removing');
+    this.setState({removingAuthor: null});
   };
 
   onFirstPage = (e) => {
@@ -75,32 +92,16 @@ class AuthorManager extends Component {
     console.log('@todo: last page');
   };
 
-  render () {
-    let commanderClassName = this.props.isAuthorManagerVisible ? 
-      'App-commander opened' : 
-      'App-commander';
-
-    let commanderAuthor = null;
-    let commanderAuthorTitle = null;
-    if (this.state.newAuthor) {
-      commanderAuthor = this.state.newAuthor;
-      commanderAuthorTitle = 'New Author';
-    } else if (this.state.author) {
-      commanderAuthor = this.state.author;
-      commanderAuthorTitle = 'Editing Author';
-    }
-
-    let commanderKeypad = null;
+  getCommanderKeypad = (commanderAuthor) => {
+    let keypad = null;
     if (this.props.isAuthorManagerVisible) {
-      commanderKeypad = [
-        <a href="#"
-          key="1"
-          className="do do-success do-circular"
+      keypad = [
+        <a key="1"
+          className="do do-primary do-circular"
           onClick={this.props.onToggleManager}>
           <i className="fas fa-hand-point-left" />
         </a>, 
-        (!commanderAuthor ? <a href="#"
-          key="2"
+        (!commanderAuthor ? <a key="2"
           className="do do-success"
           onClick={this.createAuthor}>
           <i className="fas fa-plus" />
@@ -108,15 +109,18 @@ class AuthorManager extends Component {
         </a> : null)
       ];
     } else {
-      commanderKeypad = <a href="#"
-        className="do do-success"
+      keypad = <a className="do do-primary"
         onClick={this.props.onToggleManager}>
         <i className="fas fa-feather" />
         Author Manager
       </a>
     }
 
-    let commanderTop = commanderAuthor ? (
+    return keypad;
+  };
+
+  getCommanderTop = (commanderAuthor, commanderAuthorTitle) => {
+    return commanderAuthor || this.state.removingAuthor ? (
       <h5 className="centered">
         {commanderAuthorTitle}
       </h5>
@@ -126,29 +130,64 @@ class AuthorManager extends Component {
         <small>{this.state.authors.length}</small>
       </h5>
     )
+  };
 
-    let commanderBody = commanderAuthor ? 
-      <AuthorForm 
-        author={commanderAuthor}
-        onSave={this.saveAuthor}
-        onCancel={this.cancelAuthorForm} 
-        /> :
-      <AuthorList 
+  render () {
+    let commanderAuthor = null;
+    let commanderAuthorTitle = null;
+    let commanderClassName = this.props.isAuthorManagerVisible ? 
+      'App-commander opened ' : 
+      'App-commander';
+
+    if (this.state.newAuthor) {
+      commanderAuthor = this.state.newAuthor;
+      commanderAuthorTitle = 'New Author';
+    } else if (this.state.editingAuthor) {
+      commanderAuthor = this.state.editingAuthor;
+      commanderAuthorTitle = 'Editing Author';
+    } else if (this.state.removingAuthor) {
+      commanderAuthorTitle = 'Are you sure?'
+    }
+
+    let commanderKeypad = this.getCommanderKeypad(commanderAuthor);
+    let commanderTop = this.getCommanderTop(commanderAuthor, commanderAuthorTitle);
+    let commanderDashbardClassName = null;
+    let commanderBody = null;
+    
+    if (this.state.removingAuthor) {
+      commanderDashbardClassName = 'dashboard confirmation';
+      commanderBody = <AuthorRemover
+      author={this.state.removingAuthor}
+      onCancelRemoving={this.cancelRemoving}
+      onConfirmRemoving={this.removeAuthor}
+      />
+    } else if (commanderAuthor) {
+      commanderDashbardClassName = 'dashboard saving';
+      commanderBody = <AuthorForm 
+      author={commanderAuthor}
+      onSave={this.saveAuthor}
+      onCancel={this.cancelAuthorForm} 
+      />
+    } else {
+      commanderDashbardClassName = 'dashboard';
+      commanderBody = <AuthorList 
         authors={this.state.authors}
         onEdit={this.editAuthor}
+        onStartRemoving={this.startRemoving}
         onAuthorOpen={this.goAuthor}
         onFirst={this.onFirstPage} 
         onPrevious={this.onPreviousPage} 
         onNext={this.onNextPage} 
         onLast={this.onLastPage} 
         />;
+    }
 
     return (
       <div className={commanderClassName}>
         <div className="keypad">
           {commanderKeypad}
         </div>
-        <div className="dashboard">
+        <div className={commanderDashbardClassName}>
           <div className="dashboard-top">
             {commanderTop}
           </div>
