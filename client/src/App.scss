@@ -234,7 +234,7 @@
 }
 
 form {
-	input, textarea {
+	input, textarea, select {
 		outline: none;
 		border: none;
 		width: 100%;
@@ -253,7 +253,7 @@ form {
 		&:last-child {
 			margin-bottom: 0;
 		}
-		input, textarea {
+		input, textarea, select {
 			@include border-radius(6px);
 			background-color: #2b3252;
 			color: #fff;

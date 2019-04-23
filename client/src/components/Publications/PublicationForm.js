@@ -23,12 +23,14 @@ class PublicationForm extends Component {
           <div className="field">
             <input type="text"
               autoFocus
-              placeholder="Title"  />
+              placeholder="Title"
+              defaultValue={this.props.publication.title}  />
           </div>
           <div className="field">
             <textarea type="text"
               rows="3"
-              placeholder="Publication body"></textarea>
+              placeholder="Publication body"
+              defaultValue={this.props.publication.body}></textarea>
           </div>
         </div>
 
