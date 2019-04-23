@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 
 import AuthorList from './AuthorList';
 import AuthorForm from './AuthorForm'
@@ -7,38 +8,18 @@ class AuthorManager extends Component {
   state = {
     newAuthor: null,
     author: null,
-    authors: [{
-      id: 1,
-      name: "Miguel Diganchi",
-      email: "name@gmail.com",
-      birth_date: "May 8, 1982"
-    }, {
-      id: 2,
-      name: "Diego Diganchi",
-      email: "name@gmail.com",
-      birth_date: "August 30, 2018"
-    }, {
-      id: 3,
-      name: "Romina Herrera",
-      email: "name@gmail.com",
-      birth_date: "May 21, 1992"
-    },
-    {
-      id: 4,
-      name: "Miguel Diganchi",
-      email: "name@gmail.com",
-      birth_date: "May 8, 1982"
-    }, {
-      id: 5,
-      name: "Diego Diganchi",
-      email: "name@gmail.com",
-      birth_date: "August 30, 2018"
-    }, {
-      id: 6,
-      name: "Romina Herrera",
-      email: "name@gmail.com",
-      birth_date: "May 21, 1992"
-    }]
+    authors: []
+  }
+
+  componentDidMount () {
+    axios.get('/api/authors')
+      .then(response => {
+        console.log('author response', response);
+        this.setState({authors: response.data.authors});
+      })
+      .catch(error => {
+        console.error('Authors endpoint error', error);
+      });
   }
 
   saveAuthor = (author) => {
@@ -49,7 +30,6 @@ class AuthorManager extends Component {
 
   goAuthor = (author) => {
     console.log('@todo: go open author id: ' + author.id);
-    alert('opening author?');
   };
 
   editAuthor = (author) => {
@@ -131,7 +111,7 @@ class AuthorManager extends Component {
       commanderKeypad = <a href="#"
         className="do do-success"
         onClick={this.props.onToggleManager}>
-        <i className="fas fa-hand-point-right" />
+        <i className="fas fa-feather" />
         Author Manager
       </a>
     }

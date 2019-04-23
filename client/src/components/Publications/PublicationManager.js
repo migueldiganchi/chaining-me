@@ -75,6 +75,7 @@ class PublicationManager extends Component {
   savePublication = (publication) => {
     console.log('publication', publication);
     this.props.onNotify('Publication saved successfuly');
+    this.cancelPublicationForm();
   };
 
   cancelPublicationForm = () => {
@@ -85,23 +86,33 @@ class PublicationManager extends Component {
   };
 
   render () {
+    let keypadTitle = null;
+    let buttonStyle = {
+      visibility: this.state.publication ? 'hidden' : 'visible'
+    };
+    
+    if (!this.state.newPublication) {
+      keypadTitle = (<div className="keypad board-panel-keypad">
+        <div className="text">
+          <span>Publications</span>
+          <small>{this.state.publications.length} results</small>
+        </div>
+        <a href="#"
+          style={buttonStyle} 
+          className="do do-success"
+          onClick={this.createPublication}>
+          <i className="fas fa-plus" />
+          Publication
+        </a>
+      </div>);
+    }
+
     return (
       <div>
         <Searcher 
           onSearch={this.searchPublications} 
           />
-        <div className="keypad board-panel-keypad">
-          <div className="text">
-            <span>Publications</span>
-            <small>{this.state.publications.length} results</small>
-          </div>
-          <a href="#" 
-            className="do do-success"
-            onClick={this.createPublication}>
-            <i className="fas fa-plus" />
-            Publication
-          </a>
-        </div>
+        {keypadTitle}
         <PublicationList
           newPublication={this.state.newPublication}
           publication={this.state.publication}

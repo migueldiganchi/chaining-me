@@ -2,17 +2,40 @@ import React, {Component} from 'react';
 
 class AuthorForm extends Component {
   state = {
-    currentAuthor: {
-      name: "Pirulo",
-      email: "pirulo@gmail.com",
-      birth_date: "Some day"
-    }
-  }
+    name: '',
+    email: '',
+    birth_date: ''
+  };
+
+  componentDidMount() {
+    this.setState({
+      id: this.props.author.id,
+      name: this.props.author.name,
+      email: this.props.author.email,
+      birth_date: this.props.author.birth_date
+    });
+  };
 
   saveAuthor = (e) => {
     e.preventDefault();
-    this.props.onSave(this.state.currentAuthor);
-  }
+    this.props.onSave({
+      name: this.state.name,
+      email: this.state.email,
+      birth_date: this.state.birth_date
+    });
+  };
+
+  typingName = (e) => {
+    this.setState({name: e.target.value});
+  };
+
+  typingEmail = (e) => {
+    this.setState({email: e.target.value});
+  };
+
+  typingBirthdate = (e) => {
+    this.setState({birth_date: e.target.value});
+  };
 
   render () {
     return (
@@ -23,18 +46,21 @@ class AuthorForm extends Component {
           <div className="field">
             <input type="text"
               autoFocus
+              onChange={this.typingName}
               placeholder="Name"
-              defaultValue={this.props.author.name}  />
+              value={this.state.name}  />
           </div>
           <div className="field">
             <input type="email"
+              onChange={this.typingEmail}
               placeholder="Email"
-              defaultValue={this.props.author.email}  />
+              value={this.state.email}  />
           </div>
           <div className="field">
             <input type="text"
+              onChange={this.typingBirthdate}
               placeholder="Birth of date"
-              defaultValue={this.props.author.birth_date} />
+              value={this.state.birth_date} />
           </div>
         </div>
 

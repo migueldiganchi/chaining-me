@@ -52,6 +52,45 @@ app.get('/api/publications', (req, res) => {
   res.send(JSON.stringify(data, null, 2));
 });
 
+app.get('/api/authors', (req, res) => {
+  res.set('Content-Type', 'application/json');
+  let data = {
+    authors: [{
+      id: 1,
+      name: "Miguel Diganchi",
+      email: "name@gmail.com",
+      birth_date: "May 8, 1982"
+    }, {
+      id: 2,
+      name: "Diego Diganchi",
+      email: "name@gmail.com",
+      birth_date: "August 30, 2018"
+    }, {
+      id: 3,
+      name: "Romina Herrera",
+      email: "name@gmail.com",
+      birth_date: "May 21, 1992"
+    },
+    {
+      id: 4,
+      name: "Miguel Diganchi",
+      email: "name@gmail.com",
+      birth_date: "May 8, 1982"
+    }, {
+      id: 5,
+      name: "Diego Diganchi",
+      email: "name@gmail.com",
+      birth_date: "August 30, 2018"
+    }, {
+      id: 6,
+      name: "Romina Herrera",
+      email: "name@gmail.com",
+      birth_date: "May 21, 1992"
+    }]
+  };
+  res.send(JSON.stringify(data, null, 2));
+});
+
 // All remaining requests return the React app, so it can handle routing.
 app.get('*', function(request, response) {
   response.sendFile(path.join(CLIENT_BUILD_PATH, 'index.html'));
