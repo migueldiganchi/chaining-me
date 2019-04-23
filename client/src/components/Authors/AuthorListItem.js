@@ -1,6 +1,17 @@
 import React from 'react';
 
 const AuthorListItem = (props) => {
+
+  const removeHandler = (e) => {
+    console.log('remove element');
+    e.stopPropagation();
+  }
+
+  const editHandler = (e) => {
+    props.onEdit(props.author)
+    e.stopPropagation();
+  }
+
   return (
     <div className="list-item"
       onClick={() => props.onAuthorOpen(props.author)}>
@@ -12,12 +23,12 @@ const AuthorListItem = (props) => {
       <div className="keypad">
         <a href="#" 
           className="do do-circular do-danger"
-          onClick={props.onRemove}>
+          onClick={removeHandler}>
           <i className="fas fa-eraser" />
         </a>        
-        <a href="#" 
+        <a href="#"
           className="do do-circular do-primary"
-          onClick={props.onEdit}>
+          onClick={editHandler}>
           <i className="fas fa-pencil-alt" />
         </a>
       </div>

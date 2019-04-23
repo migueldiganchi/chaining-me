@@ -1,6 +1,11 @@
 import React from 'react';
 
 const PublicationListItem = (props) => {
+
+  const removeHandler = (e) => {
+    console.log('remove element');
+    e.stopPropagation();
+  }
   
   const editHander = (e) => {
     e.preventDefault();
@@ -8,7 +13,8 @@ const PublicationListItem = (props) => {
   }
 
   return (
-    <div className="list-item">
+    <div className="list-item"
+      onClick={() => props.onPublicationOpen(props.publication)}>
       <h3>{props.publication.title}</h3>
       <p>
         <span>{props.publication.body}</span>
@@ -16,12 +22,12 @@ const PublicationListItem = (props) => {
       <small>{props.publication.date_time}</small>
       
       <div className="keypad">
-        <a href="#" 
+        <a href="#"
           className="do do-circular do-danger"
-          onClick={props.onRemove}>
+          onClick={removeHandler}>
           <i className="fas fa-eraser" />
         </a>        
-        <a href="#" 
+        <a href="#"
           className="do do-circular do-primary"
           onClick={editHander}>
           <i className="fas fa-pencil-alt" />

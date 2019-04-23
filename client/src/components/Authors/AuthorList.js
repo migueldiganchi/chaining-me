@@ -13,7 +13,8 @@ const AuthorList = (props) => {
           return (<AuthorListItem 
             key={author.id} 
             author={author}
-            onAuthorOpen={props.onAuthorOpen} />);
+            onAuthorOpen={props.onAuthorOpen}
+            onEdit={props.onEdit} />);
         })}
       </div>
       <Paginator 

@@ -41,23 +41,20 @@ class AuthorManager extends Component {
     }]
   }
 
-  goAuthor = (author) => {
-    this.setState({
-      author: author
-    });
-    setTimeout(() => {
-      console.log("on author opened clicked", author);
-    }, 3000);
-  };
-
   saveAuthor = (author) => {
     console.log("saving author?", author);
     this.props.onNotify("Author saved successfuly");
     this.cancelAuthorForm();
   };
 
-  openNewAuthorForm = () => {
-    console.log("on new button clicked");
+  goAuthor = (author) => {
+    console.log('@todo: go open author id: ' + author.id);
+    alert('opening author?');
+  };
+
+  editAuthor = (author) => {
+    console.log("editing author?", author);
+    this.setState({author: author});
   };
 
   createAuthor = () => {
@@ -158,6 +155,7 @@ class AuthorManager extends Component {
         /> :
       <AuthorList 
         authors={this.state.authors}
+        onEdit={this.editAuthor}
         onAuthorOpen={this.goAuthor}
         onFirst={this.onFirstPage} 
         onPrevious={this.onPreviousPage} 

@@ -77,6 +77,10 @@ class PublicationManager extends Component {
 
   searchPublications = (term) => {
     console.log('doing search! :D', term);
+  };
+  
+  goPublication(publication) {
+    console.log('go publication?', publication);
   }
 
   createPublication = (publication) => {
@@ -136,6 +140,7 @@ class PublicationManager extends Component {
           onNext={this.goNextPage}
           onLast={this.goLastPage}
           onSave={this.savePublication}
+          onPublicationOpen={this.goPublication}
           onCancel={this.cancelPublicationForm}
           onEdit={this.editPublication}
           />
