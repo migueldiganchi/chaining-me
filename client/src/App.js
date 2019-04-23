@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './compiled/App.css';
 
 import Header from './components/Header'
 import Board from './components/Board'
@@ -7,6 +6,8 @@ import Notifier from './components/Notifier';
 import BoardPanel from './components/BoardPanel'
 import AuthorManager from './components/Authors/AuthorManager';
 import PublicationManager from './components/Publications/PublicationManager';
+
+import './compiled/App.css';
 
 class App extends Component {
   constructor() {
@@ -17,13 +18,6 @@ class App extends Component {
     notification: null,
     isAuthorManagerVisible: false,
   };
-
-  componentDidMount() {
-    // this.notifyError("Hello!");
-    /*this.callApi()
-      .then(res => this.setState(res))
-      .catch(console.error);*/
-  }
 
   toggleManager = () => {
     this.setState({
@@ -52,27 +46,6 @@ class App extends Component {
   stopNotify = () => {
     this.setState({notification: null});
   };
-
-  /*callApi = async () => {
-    const resp = await fetch('/api');
-
-    window._resp = resp;
-
-    let text = await resp.text();
-
-    let data = null;
-    try {
-      data = JSON.parse(text); // cannot call both .json and .text - await resp.json();
-    } catch (e) {
-      console.err(`Invalid json\n${e}`);
-    }
-
-    if (resp.status !== 200) {
-      throw Error(data ? data.message : 'No data');
-    }
-
-    return data;
-  };*/
 
   render() {
     let glassApp = this.state.isAuthorManagerVisible ? (

@@ -1,6 +1,7 @@
-body {
+html, body {
   margin: 0;
   padding: 0;
+	background: #2b3252;  /* fallback for old browsers */
 }
 
 * { 

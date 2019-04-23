@@ -19,7 +19,35 @@ app.use(express.static(CLIENT_BUILD_PATH));
 app.get('/api', (req, res) => {
   res.set('Content-Type', 'application/json');
   let data = {
-    message: 'Hello world, Woooooeeeee!!!!'
+    message: 'Welcome!'
+  };
+  res.send(JSON.stringify(data, null, 2));
+});
+
+app.get('/api/publications', (req, res) => {
+  res.set('Content-Type', 'application/json');
+  let data = {
+    publications: [{
+      id: 1,
+      title: "Story nº 1",
+      body: "Publication longer content and description",
+      date_time: "May 8, 1982"
+    }, {
+      id: 2,
+      title: "Story nº 2",
+      body: "Publication longer content and description",
+      date_time: "May 30, 1982"
+    }, {
+      id: 3,
+      title: "Story nº 3",
+      body: "Publication longer content and description",
+      date_time: "May 21, 1982"
+    }, {
+      id: 4,
+      title: "Story nº 4",
+      body: "Publication longer content and description",
+      date_time: "May 21, 1982"
+    }]
   };
   res.send(JSON.stringify(data, null, 2));
 });

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 
 import PublicationList from './PublicationList';
 import Searcher from './../Searcher';
@@ -7,52 +8,22 @@ class PublicationManager extends Component {
   state = {
     newPublication: null,
     publication: null,
-    publications: [{
-      id: 1,
-      title: "Story nº 1",
-      body: "Publication longer content and description",
-      date_time: "May 8, 1982"
-    }, {
-      id: 2,
-      title: "Story nº 2",
-      body: "Publication longer content and description",
-      date_time: "May 30, 1982"
-    }, {
-      id: 3,
-      title: "Story nº 3",
-      body: "Publication longer content and description",
-      date_time: "May 21, 1982"
-    }, {
-      id: 4,
-      title: "Story nº 4",
-      body: "Publication longer content and description",
-      date_time: "May 21, 1982"
-    }, {
-      id: 5,
-      title: "Story nº 5",
-      body: "Publication longer content and description",
-      date_time: "May 21, 1982"
-    }, {
-      id: 6,
-      title: "Story nº 6",
-      body: "Publication longer content and description",
-      date_time: "May 21, 1982"
-    }, {
-      id: 7,
-      title: "Story nº 7",
-      body: "Publication longer content and description",
-      date_time: "May 21, 1982"
-    }, {
-      id: 8,
-      title: "Story nº 8",
-      body: "Publication longer content and description",
-      date_time: "May 21, 1982"
-    }, {
-      id: 9,
-      title: "Story nº 9",
-      body: "Publication longer content and description",
-      date_time: "May 21, 1982"
-    }]
+    publications: []
+  };
+
+  componentDidMount () {
+    console.log('Publication manager did mount!');
+    axios.get('/api/publications')
+      .then(response => {
+        console.log('response', response);
+        this.setState({
+          publications: response.data.publications
+        });
+        console.log('response', response);
+      })
+      .catch(error => {
+        console.error('Application error: ', error);
+      });
   };
 
   goFirstPage = (e) => {
