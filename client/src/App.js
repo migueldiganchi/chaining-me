@@ -3,12 +3,10 @@ import './compiled/App.css';
 
 import Header from './components/Header'
 import Board from './components/Board'
-import Searcher from './components/Searcher';
 import Notifier from './components/Notifier';
 import BoardPanel from './components/BoardPanel'
 import AuthorManager from './components/Authors/AuthorManager';
-import PublicationList from './components/Publications/PublicationList';
-import PublicationForm from './components/Publications/PublicationForm';
+import PublicationManager from './components/Publications/PublicationManager';
 
 class App extends Component {
   constructor() {
@@ -18,54 +16,6 @@ class App extends Component {
   state = {
     notification: null,
     isAuthorManagerVisible: false,
-    newPublication: null,
-    publication: null,
-    publications: [{
-      id: 1,
-      title: "Story nº 1",
-      body: "Publication longer content and description",
-      date_time: "May 8, 1982"
-    }, {
-      id: 2,
-      title: "Story nº 2",
-      body: "Publication longer content and description",
-      date_time: "May 30, 1982"
-    }, {
-      id: 3,
-      title: "Story nº 3",
-      body: "Publication longer content and description",
-      date_time: "May 21, 1982"
-    }, {
-      id: 4,
-      title: "Story nº 4",
-      body: "Publication longer content and description",
-      date_time: "May 21, 1982"
-    }, {
-      id: 5,
-      title: "Story nº 5",
-      body: "Publication longer content and description",
-      date_time: "May 21, 1982"
-    }, {
-      id: 6,
-      title: "Story nº 6",
-      body: "Publication longer content and description",
-      date_time: "May 21, 1982"
-    }, {
-      id: 7,
-      title: "Story nº 7",
-      body: "Publication longer content and description",
-      date_time: "May 21, 1982"
-    }, {
-      id: 8,
-      title: "Story nº 8",
-      body: "Publication longer content and description",
-      date_time: "May 21, 1982"
-    }, {
-      id: 9,
-      title: "Story nº 9",
-      body: "Publication longer content and description",
-      date_time: "May 21, 1982"
-    }]
   };
 
   componentDidMount() {
@@ -73,31 +23,6 @@ class App extends Component {
     /*this.callApi()
       .then(res => this.setState(res))
       .catch(console.error);*/
-  }
-
-  goSearch = (e, term) => {
-    e.preventDefault();
-    console.log('doing search! :D', e);
-  }
-
-  goFirstPage = (e) => {
-    e.preventDefault();
-    console.log('@todo: publications next page');
-  }
-
-  goPreviousPage = (e) => {
-    e.preventDefault();
-    console.log('@todo: publications previous page');
-  }
-
-  goNextPage = (e) => {
-    e.preventDefault();
-    console.log('@todo: publications next page');
-  }
-
-  goLastPage = (e) => {
-    e.preventDefault();
-    console.log('@todo: publications last page', e);
   }
 
   toggleManager = () => {
@@ -126,18 +51,6 @@ class App extends Component {
 
   stopNotify = () => {
     this.setState({notification: null});
-  };
-
-  savePublication = (publication) => {
-    console.log('publication', publication);
-    this.notify('Publication saved successfuly');
-  }
-
-  cancelPublicationForm = () => {
-    this.setState({
-      publication: null,
-      newPublication: null
-    });
   };
 
   /*callApi = async () => {
@@ -180,22 +93,9 @@ class App extends Component {
           onNotify={this.notify}
           />
         <Board>
-          <Searcher 
-            onSearch={this.goSearch} 
-            />
-          <BoardPanel
-            title="Publications"
-            total={this.state.publications.length}>
-            <PublicationForm 
-              onCancel={this.cancelPublicationForm}
-              onSave={this.savePublication}
-              />
-            <PublicationList
-              publications={this.state.publications}
-              onFirst={this.goFirstPage}
-              onPrevious={this.goPreviousPage}
-              onNext={this.goNextPage}
-              onLast={this.goLastPage}
+          <BoardPanel>
+            <PublicationManager 
+              onNotify={this.notify} 
               />
           </BoardPanel>
         </Board>

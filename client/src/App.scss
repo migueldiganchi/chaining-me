@@ -274,6 +274,7 @@ form {
 	text-align: center;
 	.keypad {
 		float: none !important;
+		display: inline-block;
 		.do-circular {
 			font-size: 12px;
 		}

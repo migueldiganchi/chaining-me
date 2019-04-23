@@ -19,8 +19,9 @@ class Searcher extends Component {
     });
   }
 
-  goSearch = (e, term) => {
-    this.props.onSearch(e, term);
+  goSearch = (e) => {
+    e.preventDefault();
+    this.props.onSearch(this.state.term);
   }
 
   onTyping = (e) => {
@@ -42,13 +43,12 @@ class Searcher extends Component {
         <form 
           action="/searcher" 
           method="get"
-          onSubmit={(e) => this.goSearch(e, this.state.term)}>
+          onSubmit={this.goSearch}>
           <input 
             onFocus={this.suggestSearching}
             onBlur={this.finishSuggestion}
             onChange={this.onTyping}
             type="text"
-            value={this.state.term}
             placeholder={placeholderText} />
           <button className="do do-circular">
             <i className="fas fa-search" />

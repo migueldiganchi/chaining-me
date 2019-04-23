@@ -154,7 +154,8 @@ class AuthorManager extends Component {
       <AuthorForm 
         author={commanderAuthor}
         onSave={this.saveAuthor}
-        onCancel={this.cancelAuthorForm} /> :
+        onCancel={this.cancelAuthorForm} 
+        /> :
       <AuthorList 
         authors={this.state.authors}
         onAuthorOpen={this.goAuthor}
