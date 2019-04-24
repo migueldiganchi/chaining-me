@@ -12,19 +12,9 @@ class PublicationManager extends Component {
     publications: []
   };
 
-  componentDidMount () {
-    console.log('Publication manager did mount!');
-    axios.get('/api/publications')
-      .then(response => {
-        console.log('response', response);
-        this.setState({
-          publications: response.data.publications
-        });
-        console.log('response', response);
-      })
-      .catch(error => {
-        console.error('Application error: ', error);
-      });
+  componentDidMount (term) {
+    console.log('term to get publications');
+    this.getPublications();
   };
 
   goFirstPage = (e) => {
@@ -47,9 +37,22 @@ class PublicationManager extends Component {
     console.log('@todo: publications last page', e);
   };
 
-  searchPublications = (term) => {
-    console.log('doing search! :D', term);
-    this.props.onNotify("@todo: Doing publication search");
+  getPublications = () => {
+    console.log('Publication manager did mount!');
+    this.props.onWait(true);
+    axios.get('/api/publications')
+      .then(response => {
+        this.props.onStopWait();
+        console.log('response', response);
+        this.setState({
+          publications: response.data.publications
+        });
+        console.log('response', response);
+      })
+      .catch(error => {
+        this.props.onStopWait();
+        console.error('Application error: ', error);
+      });
   };
   
   goPublication(publication) {
@@ -82,8 +85,10 @@ class PublicationManager extends Component {
   };
 
   removePublication = (publication) => {
-    console.log('do effective the removing of this publication: ', publication);
+    console.log('@todo: remove this publication ', publication);
+    this.props.onWait("Removing publication...");
     setTimeout(() => {
+      this.props.onStopWait();
       this.props.onNotify('Publication removed successfuly');
       this.cancelRemoving();
     }, 3000);
@@ -96,9 +101,15 @@ class PublicationManager extends Component {
   };
 
   savePublication = (publication) => {
-    console.log('publication', publication);
-    this.props.onNotify('Publication saved successfuly');
-    this.cancelPublicationForm();
+    let loadingMessage = publication.id ? 
+      'Saving publication...' : 
+      'Creating publication...';
+    this.props.onWait(loadingMessage);
+    setTimeout(() => {
+      this.props.onStopWait();
+      this.props.onNotify('Publication saved successfuly!', 'success');
+      this.cancelPublicationForm();
+    }, 3000);
   };
 
   cancelPublicationForm = () => {
@@ -120,7 +131,7 @@ class PublicationManager extends Component {
     
     if (!this.state.newPublication && !this.state.editingPublication) {
       searcher = <Searcher 
-        onSearch={this.searchPublications}
+        onSearch={this.getPublications}
         onOrder={this.orderPublications}
         />;
       keypadTitle = (

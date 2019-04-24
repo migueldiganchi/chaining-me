@@ -26,8 +26,15 @@ class AuthorManager extends Component {
 
   saveAuthor = (author) => {
     console.log("saving author?", author);
-    this.props.onNotify("Author saved successfuly");
-    this.cancelAuthorForm();
+    let loadingMessage = author.id ? 
+      'Saving author...' : 
+      'Creating author...';
+    this.props.onWait(loadingMessage);
+    setTimeout(() => {
+      this.props.onStopWait();
+      this.props.onNotify("Author saved successfuly!");
+      this.cancelAuthorForm();
+    }, 3000);
   };
 
   goAuthor = (author) => {
@@ -64,7 +71,9 @@ class AuthorManager extends Component {
 
   removeAuthor = (author) => {
     console.log('Do effective the removing', author);
+    this.props.onWait('Removing author...');
     setTimeout(() => {
+      this.props.onStopWait();
       this.props.onNotify('Publication removed successfuly');
       this.cancelRemoving();
     }, 3000);
