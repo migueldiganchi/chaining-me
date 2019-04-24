@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Paginator = (props) => {
+function Paginator (props) {
   return (
     <div className="paginator">
       <div className="keypad">

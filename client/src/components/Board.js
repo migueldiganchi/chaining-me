@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Board = (props) => {
+function Board (props) {
   return (
     <div className="App-board">
         {props.children}

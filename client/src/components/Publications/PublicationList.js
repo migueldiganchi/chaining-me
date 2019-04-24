@@ -6,7 +6,7 @@ import Paginator from './../Paginator';
 
 import '../../compiled/components/Publications/Publications.css';
 
-const PublicationList = (props) => {
+function PublicationList (props) {
 
   const isEditing = (publication) => {
     return props.editingPublication && 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import botTalking from './../assets/media/bot-talking.gif';
 
-const Notifier = (props) => {
+function Notifier (props) {
   let message = props.notification ? props.notification.message : null;
   let type = props.notification ? props.notification.type : "";
   let notifierClass = message ? 

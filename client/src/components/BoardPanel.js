@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BoardPanel = (props) => {
+function BoardPanel (props) {
   return(
     <div className="App-board-panel">
       <div className="panel-body">

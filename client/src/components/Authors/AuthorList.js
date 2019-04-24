@@ -5,7 +5,7 @@ import Paginator from './../Paginator';
 
 import './../../compiled/components/Authors/Authors.css';
 
-const AuthorList = (props) => {
+function AuthorList (props) {
   return (
     <div className="list-container">
       <div className="author-list">
