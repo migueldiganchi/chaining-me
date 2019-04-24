@@ -109,13 +109,19 @@ class PublicationManager extends Component {
     });
   };
 
+  orderPublications = (field, orientation) => {
+    console.log('field?', field);
+    console.log('orientation?', orientation);
+  };
+
   render () {
     let searcher = null;
     let keypadTitle = null;
     
     if (!this.state.newPublication && !this.state.editingPublication) {
       searcher = <Searcher 
-        onSearch={this.searchPublications} 
+        onSearch={this.searchPublications}
+        onOrder={this.orderPublications}
         />;
       keypadTitle = (
         <div className="keypad board-panel-keypad">

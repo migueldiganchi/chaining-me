@@ -82,6 +82,7 @@
 	.App-searcher {
 		@include border-radius(9px);
 		@include box-shadow(1px, 1px, 1px, #111);
+		position: relative;
 		background-color: #444b69;
 		padding: 9px;
 		margin-top: -60px;
@@ -98,8 +99,40 @@
 			}
 			button {
 				position: absolute;
-				top: 7px;
-				right: 8px;
+				top: 5px;
+				right: 5px;
+			}
+		}
+
+		.filter-toggler {
+			transition: opacity 0.3s ease,
+				color 0.3s ease;
+			position: absolute;
+			opacity: 0.6;
+			font-size: 15px;
+			top: 24px;
+			right: 60px;
+			width: 21px;
+			height: 21px;
+			line-height: 21px;
+			text-align: center;
+			color: #fff;
+			&:hover,
+			&.active {
+				color: #fad744;
+				opacity: 1;
+				cursor: pointer;
+			}
+		}
+
+		.order-info {
+			overflow: auto;
+			margin-top: 9px;
+			.keypad.left {
+				float: left !important;
+			}
+			.keypad.right {
+				float: right !important;
 			}
 		}
 
@@ -347,9 +380,6 @@ form {
 
 		display: inline-block;
 		position: absolute;
-		.do {
-			text-align: center;
-		}
 		
 	}
 
@@ -411,10 +441,11 @@ form {
 	
 	&.do-circular {
 		@include border-radius(50%);
+		text-align: center;
 		display: inline-block;
-		height: 33px;
-		width: 33px;
-		line-height: 33px;
+		height: 36px;
+		width: 36px;
+		line-height: 36px;
 		padding: 0;
 	}
 

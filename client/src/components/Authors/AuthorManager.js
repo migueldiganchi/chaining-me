@@ -64,7 +64,10 @@ class AuthorManager extends Component {
 
   removeAuthor = (author) => {
     console.log('Do effective the removing', author);
-    this.state.onNotify('@todo: Do effective the removing');
+    setTimeout(() => {
+      this.props.onNotify('Publication removed successfuly');
+      this.cancelRemoving();
+    }, 3000);
   };
 
   cancelRemoving = () => {
