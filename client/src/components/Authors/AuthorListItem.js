@@ -3,11 +3,13 @@ import React from 'react';
 const AuthorListItem = (props) => {
 
   const startRemovingHandler = (e) => {
+    e.preventDefault();
     props.onStartRemoving(props.author)
     e.stopPropagation();
   };
 
   const editHandler = (e) => {
+    e.preventDefault();
     props.onEdit(props.author)
     e.stopPropagation();
   }

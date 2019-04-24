@@ -3,9 +3,13 @@ import React from 'react';
 function AuthorRemover (props) {
   return (
     <div className="confirmation">
-      <div>{props.author.name}</div>
-      <div>{props.author.email}</div>
-      <div>{props.author.birth_date}</div>
+      <div><b>{props.author.name}</b></div>
+      <div>
+        <small>{props.author.email}</small>
+      </div>
+      <div>
+        <small>{props.author.birth_date}</small>
+      </div>
 
       <div className="keypad">
         <a className="do"
