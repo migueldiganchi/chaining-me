@@ -13,11 +13,13 @@ function AuthorRemover (props) {
 
       <div className="keypad">
         <a className="do"
+          disabled={props.waiting}
           onClick={props.onCancelRemoving}>
           <i className="fas fa-ban" />
           Cancel
         </a>
         <a className="do do-warning"
+          disabled={props.waiting}
           onClick={props.onConfirmRemoving}>
           <i className="fas fa-eraser" />
           Remove

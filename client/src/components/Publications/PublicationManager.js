@@ -115,8 +115,7 @@ class PublicationManager extends Component {
   cancelPublicationForm = () => {
     this.setState({
       newPublication: null,
-      editingPublication: null,
-      removingPublication: null
+      editingPublication: null
     });
   };
 
@@ -159,6 +158,7 @@ class PublicationManager extends Component {
           editingPublication={this.state.editingPublication}
           removingPublication={this.state.removingPublication}
           publications={this.state.publications}
+          disableItems={this.state.newPublication}
           onFirst={this.goFirstPage}
           onPrevious={this.goPreviousPage}
           onNext={this.goNextPage}
@@ -170,7 +170,6 @@ class PublicationManager extends Component {
           onStartRemoving={this.startRemoving}
           onConfirmRemoving={this.removePublication}
           onCancelRemoving={this.cancelRemoving}
-          disableItems={this.state.newPublication}
           />
       </div>
     );

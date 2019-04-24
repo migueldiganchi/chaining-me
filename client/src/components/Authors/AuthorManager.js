@@ -26,13 +26,11 @@ class AuthorManager extends Component {
 
   saveAuthor = (author) => {
     console.log("saving author?", author);
-    let loadingMessage = author.id ? 
-      'Saving author...' : 
-      'Creating author...';
+    let loadingMessage = author.id ? 'Saving author...' : 'Creating author...';
     this.props.onWait(loadingMessage);
     setTimeout(() => {
       this.props.onStopWait();
-      this.props.onNotify("Author saved successfuly!");
+      this.props.onNotify('Author saved successfuly!', 'success');
       this.cancelAuthorForm();
     }, 3000);
   };
@@ -113,7 +111,7 @@ class AuthorManager extends Component {
           onClick={this.props.onToggleManager}>
           <i className="fas fa-hand-point-left" />
         </a>, 
-        (!commanderAuthor ? <a key="2"
+        (!commanderAuthor && !this.state.removingAuthor ? <a key="2"
           className="do do-success"
           onClick={this.createAuthor}>
           <i className="fas fa-plus" />
@@ -121,20 +119,19 @@ class AuthorManager extends Component {
         </a> : null)
       ];
     } else {
-      keypad = <a className="do do-primary"
+      keypad = <a className="do do-primary "
         onClick={this.props.onToggleManager}>
         <i className="fas fa-feather" />
         Author Manager
       </a>
     }
-
     return keypad;
   };
 
   getCommanderTop = (commanderAuthor, commanderAuthorTitle) => {
     return commanderAuthor || this.state.removingAuthor ? (
       <h5 className="centered">
-        {commanderAuthorTitle}
+        {this.props.waiting ? this.props.waiting : commanderAuthorTitle}
       </h5>
     ) : (
       <h5>
@@ -162,36 +159,47 @@ class AuthorManager extends Component {
     }
 
     let commanderKeypad = this.getCommanderKeypad(commanderAuthor);
-    let commanderTop = this.getCommanderTop(commanderAuthor, commanderAuthorTitle);
+    let commanderTop = this.getCommanderTop(
+      commanderAuthor, 
+      commanderAuthorTitle
+    );
     let commanderDashbardClassName = null;
     let commanderBody = null;
     
     if (this.state.removingAuthor) {
       commanderDashbardClassName = 'dashboard confirmation';
-      commanderBody = <AuthorRemover
-      author={this.state.removingAuthor}
-      onCancelRemoving={this.cancelRemoving}
-      onConfirmRemoving={this.removeAuthor}
-      />
+      commanderBody = (
+        <AuthorRemover
+          author={this.state.removingAuthor}
+          onCancelRemoving={this.cancelRemoving}
+          onConfirmRemoving={this.removeAuthor}
+          waiting={this.props.waiting}
+          />
+      );
     } else if (commanderAuthor) {
       commanderDashbardClassName = 'dashboard saving';
-      commanderBody = <AuthorForm 
-      author={commanderAuthor}
-      onSave={this.saveAuthor}
-      onCancel={this.cancelAuthorForm} 
-      />
+      commanderBody = (
+        <AuthorForm 
+          author={commanderAuthor}
+          onSave={this.saveAuthor}
+          onCancel={this.cancelAuthorForm} 
+          waiting={this.props.waiting}
+          />
+      );
     } else {
       commanderDashbardClassName = 'dashboard';
-      commanderBody = <AuthorList 
-        authors={this.state.authors}
-        onEdit={this.editAuthor}
-        onStartRemoving={this.startRemoving}
-        onAuthorOpen={this.goAuthor}
-        onFirst={this.onFirstPage} 
-        onPrevious={this.onPreviousPage} 
-        onNext={this.onNextPage} 
-        onLast={this.onLastPage} 
-        />;
+      commanderBody = (
+        <AuthorList 
+          authors={this.state.authors}
+          onEdit={this.editAuthor}
+          onStartRemoving={this.startRemoving}
+          onAuthorOpen={this.goAuthor}
+          onFirst={this.onFirstPage} 
+          onPrevious={this.onPreviousPage} 
+          onNext={this.onNextPage} 
+          onLast={this.onLastPage}
+          />
+      );
     }
 
     return (

@@ -348,7 +348,11 @@ form {
 	input, textarea, select {
 		outline: none;
 		border: none;
-		width: 100%;;
+		width: 100%;
+
+		&[disabled] {
+			color: #84838f !important;
+		}
 
 		&::placeholder {
 			color: #586083;
@@ -497,6 +501,14 @@ form {
 	&.active {
 		@include box-shadow(2px, 2px, 2px, #111);
 		cursor: pointer;
+	}
+
+	&:disabled,
+	&[disabled],
+	&.disabled {
+		@include box-shadow(0, 0, 0, #fff);
+		opacity: 0.6;
+		pointer-events: none;
 	}
 	
 	&.do-circular {

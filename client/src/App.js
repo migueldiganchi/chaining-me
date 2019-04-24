@@ -13,11 +13,14 @@ import './compiled/App.css';
 class App extends Component {
   state = {
     notification: null,
-    waiting: false,
+    waiting: null,
     isAuthorManagerVisible: false
   };
 
   toggleManager = () => {
+    if (this.state.waiting) {
+      return;
+    }
     this.setState({
       isAuthorManagerVisible: !this.state.isAuthorManagerVisible
     });
@@ -58,7 +61,7 @@ class App extends Component {
   stopWait = () => {
     console.log('stop waiting');
     this.setState({
-      waiting: false,
+      waiting: null,
       notification: null
     });
   };
@@ -82,6 +85,7 @@ class App extends Component {
         <AuthorManager 
           onToggleManager={this.toggleManager}
           isAuthorManagerVisible={this.state.isAuthorManagerVisible}
+          waiting={this.state.waiting}
           onNotify={this.notify}
           onWait={this.wait}
           onStopWait={this.stopWait}
@@ -89,6 +93,7 @@ class App extends Component {
         <Board>
           <BoardPanel>
             <PublicationManager 
+              waiting={this.state.waiting}
               onNotify={this.notify}
               onWait={this.wait}
               onStopWait={this.stopWait} 

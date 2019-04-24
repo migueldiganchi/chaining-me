@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AuthorListItem = (props) => {
+function AuthorListItem (props) {
 
   const startRemovingHandler = (e) => {
     e.preventDefault();
@@ -23,12 +23,12 @@ const AuthorListItem = (props) => {
       </p>
 
       <div className="keypad">
-        <a href="#" 
+        <a href="#"
           className="do do-circular do-danger"
           onClick={startRemovingHandler}>
           <i className="fas fa-eraser" />
         </a>        
-        <a href="#"
+        <a href="#" 
           className="do do-circular do-primary"
           onClick={editHandler}>
           <i className="fas fa-pencil-alt" />

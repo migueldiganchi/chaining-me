@@ -38,6 +38,13 @@ class AuthorForm extends Component {
   };
 
   render () {
+    let cancelButtonClassName = this.props.waiting ? 
+      'do disabled' : 
+      'do';
+    let submitButtonClassName = this.props.waiting ? 
+      'do do-primary disabled' :
+      'do do-primary';
+
     return (
       <form 
         onSubmit={this.saveAuthor}
@@ -45,6 +52,7 @@ class AuthorForm extends Component {
         <div className="form-body">
           <div className="field">
             <input type="text"
+              disabled={this.props.waiting}
               autoFocus
               onChange={this.typingName}
               placeholder="Name"
@@ -52,12 +60,14 @@ class AuthorForm extends Component {
           </div>
           <div className="field">
             <input type="email"
+              disabled={this.props.waiting}
               onChange={this.typingEmail}
               placeholder="Email"
               value={this.state.email}  />
           </div>
           <div className="field">
             <input type="text"
+              disabled={this.props.waiting}
               onChange={this.typingBirthdate}
               placeholder="Birth of date"
               value={this.state.birth_date} />
@@ -66,13 +76,13 @@ class AuthorForm extends Component {
 
         <div className="keypad">
           <button type="button"
-            className="do"
+            className={cancelButtonClassName}
             onClick={this.props.onCancel}>
             <i className="fas fa-ban" />
             Cancel
           </button>
           <button type="submit"
-            className="do do-primary">
+            className={submitButtonClassName}>
             <i className="fas fa-hdd" />
             Save
           </button>

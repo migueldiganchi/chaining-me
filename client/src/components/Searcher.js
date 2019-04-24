@@ -50,8 +50,9 @@ class Searcher extends Component {
       <div className="order-info">
         <div className="keypad left">
           <a onClick={this.toggleFilter}
-            className="do do-circular">
+            className="do">
             <i className="fas fa-times" />
+            Close
           </a>
         </div>          
         <div className="keypad right">
