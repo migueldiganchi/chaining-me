@@ -72,7 +72,7 @@ class AuthorManager extends Component {
     this.props.onWait('Removing author...');
     setTimeout(() => {
       this.props.onStopWait();
-      this.props.onNotify('Publication removed successfuly');
+      this.props.onNotify('Author removed successfuly', 'success');
       this.cancelRemoving();
     }, 3000);
   };
