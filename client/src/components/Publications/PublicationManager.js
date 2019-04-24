@@ -159,6 +159,7 @@ class PublicationManager extends Component {
           onStartRemoving={this.startRemoving}
           onConfirmRemoving={this.removePublication}
           onCancelRemoving={this.cancelRemoving}
+          disableItems={this.state.newPublication}
           />
       </div>
     );

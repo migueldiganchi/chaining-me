@@ -15,6 +15,7 @@ function PublicationListItem (props) {
   }
 
   const cancelRemoving = (e) => {
+    e.preventDefault();
     props.onCancelRemoving(props.publication);
     e.stopPropagation();
   }
@@ -25,12 +26,12 @@ function PublicationListItem (props) {
     e.stopPropagation();
   };
   
-  let className = 'list-item'
+  let listItemClassName = 'list-item'
   let confirmation = null;
   let keypad = null;
   
   if (props.isRemoving) {
-    className = 'list-item removing';
+    listItemClassName = 'list-item removing';
     confirmation = <div className="keypad confirmation fixed">
       <h4>Are you sure?</h4>
     </div>;
@@ -45,9 +46,11 @@ function PublicationListItem (props) {
         className="do do-warning"
         onClick={confirmRemoving}>
         <i className="fas fa-eraser" />
-        Confirm removing
+        Remove
       </a>
     </div>;
+  } else if (props.isDisabled) {
+    listItemClassName = 'list-item disabled';
   } else {
     keypad = <div className="keypad">
       <a href="#"
@@ -64,16 +67,14 @@ function PublicationListItem (props) {
   }
 
   return (
-    <div className={className}
+    <div className={listItemClassName}
       onClick={() => props.onOpen(props.publication)}>
       {confirmation}
-
       <h3>{props.publication.title}</h3>
       <p>
         <span>{props.publication.body}</span>
       </p>
       <small>{props.publication.date_time}</small>
-      
       {keypad}
     </div>
   );

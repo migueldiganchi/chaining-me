@@ -8,6 +8,22 @@ import '../../compiled/components/Publications/Publications.css';
 
 const PublicationList = (props) => {
 
+  const isEditing = (publication) => {
+    return props.editingPublication && 
+      props.editingPublication.id === publication.id;
+  };
+
+  const isRemoving = (publication) => {
+    return props.removingPublication && 
+      props.removingPublication.id === publication.id
+  };
+
+  const isDisabled = (publication) => {
+    return props.disableItems || 
+     (props.editingPublication && props.editingPublication.id != publication.id) || 
+     (props.removingPublication && props.removingPublication.id != publication.id)
+  };
+
   let newForm = null;
   let paginator = null;
 
@@ -33,7 +49,7 @@ const PublicationList = (props) => {
       {newForm}
       <div className="publication-list">
         {props.publications.map((publication) => {
-          return props.editingPublication && props.editingPublication.id === publication.id ? 
+          return isEditing(publication) ? 
             <PublicationForm 
               key={publication.id}
               publication={props.editingPublication}
@@ -43,7 +59,8 @@ const PublicationList = (props) => {
             <PublicationListItem 
               key={publication.id}
               publication={publication}
-              isRemoving={props.removingPublication && props.removingPublication.id === publication.id}
+              isRemoving={isRemoving(publication)}
+              isDisabled={isDisabled(publication)}
               onEdit={props.onEdit}
               onStartRemoving={props.onStartRemoving}
               onConfirmRemoving={props.onConfirmRemoving}

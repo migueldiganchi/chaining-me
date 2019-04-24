@@ -1,6 +1,11 @@
+@import './../../assets/styles/_mixins';
+
 .publication-list {
     margin-bottom: 30px;
     .list-item {
+        // @include transition(color, 0.3s, ease);
+        transition: color 0.3s, ease,
+            background-color 0.3s ease;
         padding: 15px;
         margin-bottom: 15px;
         h3, p {
@@ -14,6 +19,20 @@
         .keypad:not(.confirmation) {
             bottom: 6px;
             right: 6px;
+        }
+
+        &.disabled {
+            @include box-shadow(0, 0, 0, #111111);
+            background-color: #999;
+            * {color: #444b69 !important}
+            &:hover {
+                cursor: initial !important;
+                & > .keypad {
+                    opacity: 0 !important;
+                    display: none !important;
+                    visibility: hidden !important;
+                }
+            }                
         }
 
         .keypad.confirmation {
