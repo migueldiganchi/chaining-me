@@ -27,7 +27,16 @@ class AuthorManager extends Component {
   saveAuthor = (author) => {
     console.log("saving author?", author);
     let loadingMessage = author.id ? 'Saving author...' : 'Creating author...';
+    let method = author.id ? axios.put : axios.post;
     this.props.onWait(loadingMessage);
+    method('api/author', author)
+      .then(response => {
+        console.log('response', response);
+      })
+      .catch(error => {
+        console.log('Client error', error);
+      });
+
     setTimeout(() => {
       this.props.onStopWait();
       this.props.onNotify('Author saved successfuly!', 'success');
@@ -36,7 +45,18 @@ class AuthorManager extends Component {
   };
 
   goAuthor = (author) => {
-    console.log('@todo: go open author id: ' + author.id);
+    axios.get('/api/author/' + author.id)
+    .then(response => {
+        let author = response.data.author;
+        console.log('author', author);
+        this.props.onNotify(
+          'You are in the ' +   author.name + ' profile', 
+          'success'
+        );
+      })
+      .catch(error => {
+        console.log('Error getting the author', error);
+      });
   };
 
   editAuthor = (author) => {
