@@ -19,7 +19,7 @@ function Notifier (props) {
     <div className={notifierClass}>
       {notificationMessage}
       <div className="bot">
-        <img src={botTalking} alt={message} />
+        <img src={botTalking} alt="Chaning-me.Text App" />
       </div>
     </div>
   );
