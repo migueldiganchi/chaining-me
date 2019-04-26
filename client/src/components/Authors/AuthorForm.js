@@ -19,6 +19,7 @@ class AuthorForm extends Component {
   saveAuthor = (e) => {
     e.preventDefault();
     this.props.onSave({
+      id: this.props.author.id,
       name: this.state.name,
       email: this.state.email,
       birth_date: this.state.birth_date
