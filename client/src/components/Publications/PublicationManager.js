@@ -139,8 +139,7 @@ class PublicationManager extends Component {
             <span>Publications</span>
             <small>{this.state.publications.length} results</small>
           </div>
-          <a href="#"
-            className="do do-success"
+          <a className="do do-success"
             onClick={this.createPublication}>
             <i className="fas fa-plus" />
             Publication

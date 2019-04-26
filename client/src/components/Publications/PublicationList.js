@@ -20,8 +20,8 @@ function PublicationList (props) {
 
   const isDisabled = (publication) => {
     return props.disableItems || 
-     (props.editingPublication && props.editingPublication.id != publication.id) || 
-     (props.removingPublication && props.removingPublication.id != publication.id)
+     (props.editingPublication && props.editingPublication.id !== publication.id) || 
+     (props.removingPublication && props.removingPublication.id !== publication.id)
   };
 
   let newForm = null;

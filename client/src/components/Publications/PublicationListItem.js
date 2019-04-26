@@ -42,8 +42,7 @@ function PublicationListItem (props) {
         <i className="fas fa-ban" />
         Cancel
       </button>
-      <a href="#"
-        className="do do-warning"
+      <a className="do do-warning"
         onClick={confirmRemoving}>
         <i className="fas fa-eraser" />
         Remove
@@ -53,13 +52,11 @@ function PublicationListItem (props) {
     listItemClassName = 'list-item disabled';
   } else {
     keypad = <div className="keypad">
-      <a href="#"
-        className="do do-circular do-danger"
+      <a className="do do-circular do-danger"
         onClick={startRemovingHandler}>
         <i className="fas fa-eraser" />
       </a>        
-      <a href="#"
-        className="do do-circular do-primary"
+      <a className="do do-circular do-primary"
         onClick={editHander}>
         <i className="fas fa-pencil-alt" />
       </a>

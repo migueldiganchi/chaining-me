@@ -23,13 +23,11 @@ function AuthorListItem (props) {
       </p>
 
       <div className="keypad">
-        <a href="#"
-          className="do do-circular do-danger"
+        <a className="do do-circular do-danger"
           onClick={startRemovingHandler}>
           <i className="fas fa-eraser" />
         </a>        
-        <a href="#" 
-          className="do do-circular do-primary"
+        <a className="do do-circular do-primary"
           onClick={editHandler}>
           <i className="fas fa-pencil-alt" />
         </a>
