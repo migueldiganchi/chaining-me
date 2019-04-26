@@ -1,5 +1,11 @@
 version: '2'
 services:
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: qwe789
   server:
     build:
       context: ./server/
@@ -7,6 +13,8 @@ services:
     volumes:
       - ./server/:/usr/app
       - /usr/app/node_modules
+    depends_on:
+      - db
     ports:
       - "8080:8080"
     # env_file: ./server/.env # TODO - uncomment this to auto-load your .env file!

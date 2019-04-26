@@ -7,23 +7,30 @@ const path = require('path');
 const PORT = process.env.PORT || 8080;
 const HOST = '0.0.0.0';
 
-const CLIENT_BUILD_PATH = path.join(__dirname, '../../client/build');
+const CLIENT_BUILD_PATH = path.join(__dirname, './../../client/build');
 
+// Controllers
+const applicationController = require('./controllers/application');
+const authorsController = require('./controllers/authors');
 // App
+
 const app = express();
 
 // Static files
 app.use(express.static(CLIENT_BUILD_PATH));
 
-// API
-app.get('/api', (req, res) => {
-  res.set('Content-Type', 'application/json');
-  let data = {
-    message: 'Welcome!'
-  };
-  res.send(JSON.stringify(data, null, 2));
-});
 
+// API
+app.get('/api', applicationController.welcome);
+
+// API: Authors
+app.get('/api/authors', authorsController.getAuthors);
+app.get('/api/author/:id', authorsController.getAuthor);
+app.put('/api/author/:id', authorsController.updateAuthor);
+app.post('/api/author', authorsController.createAuthor);
+app.delete('/api/author/:id', authorsController.removeAuthor);
+
+// API: Publications
 app.get('/api/publications', (req, res) => {
   res.set('Content-Type', 'application/json');
   let data = {
@@ -52,49 +59,12 @@ app.get('/api/publications', (req, res) => {
   res.send(JSON.stringify(data, null, 2));
 });
 
-app.get('/api/authors', (req, res) => {
-  res.set('Content-Type', 'application/json');
-  let data = {
-    authors: [{
-      id: 1,
-      name: "Miguel Diganchi",
-      email: "name@gmail.com",
-      birth_date: "May 8, 1982"
-    }, {
-      id: 2,
-      name: "Diego Diganchi",
-      email: "name@gmail.com",
-      birth_date: "August 30, 2018"
-    }, {
-      id: 3,
-      name: "Romina Herrera",
-      email: "name@gmail.com",
-      birth_date: "May 21, 1992"
-    },
-    {
-      id: 4,
-      name: "Miguel Diganchi",
-      email: "name@gmail.com",
-      birth_date: "May 8, 1982"
-    }, {
-      id: 5,
-      name: "Diego Diganchi",
-      email: "name@gmail.com",
-      birth_date: "August 30, 2018"
-    }, {
-      id: 6,
-      name: "Romina Herrera",
-      email: "name@gmail.com",
-      birth_date: "May 21, 1992"
-    }]
-  };
-  res.send(JSON.stringify(data, null, 2));
-});
-
 // All remaining requests return the React app, so it can handle routing.
-app.get('*', function(request, response) {
-  response.sendFile(path.join(CLIENT_BUILD_PATH, 'index.html'));
+app.get('*', function(req, res) {
+  res.sendFile(path.join(CLIENT_BUILD_PATH, 'index.html'));
 });
 
-app.listen(PORT, HOST);
+// Running app
 console.log(`Running on http://${HOST}:${PORT}`);
+app.listen(PORT, HOST);
+
