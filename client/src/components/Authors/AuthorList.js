@@ -10,13 +10,15 @@ function AuthorList (props) {
     <div className="list-container">
       <div className="author-list">
         {props.authors.map((author) => {
-          return (<AuthorListItem 
-            key={author.id} 
-            author={author}
-            onAuthorOpen={props.onAuthorOpen}
-            onEdit={props.onEdit} 
-            onStartRemoving={props.onStartRemoving}
-            />);
+          return (
+            <AuthorListItem 
+              key={author.id}
+              author={author}
+              onAuthorOpen={props.onAuthorOpen}
+              onEdit={props.onEdit} 
+              onStartRemoving={props.onStartRemoving}
+              />
+          );
         })}
       </div>
       <Paginator 

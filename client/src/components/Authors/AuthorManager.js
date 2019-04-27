@@ -1,11 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 import AuthorList from './AuthorList';
 import AuthorForm from './AuthorForm'
 import AuthorRemover from './AuthorRemover'
 
-class AuthorManager extends Component {
+class AuthorManager extends React.Component {
   state = {
     newAuthor: null,
     editingAuthor: null,
@@ -16,7 +17,6 @@ class AuthorManager extends Component {
   componentDidMount () {
     axios.get('/api/authors')
       .then(response => {
-        console.log('author response', response);
         this.setState({authors: response.data.authors});
       })
       .catch(error => {
@@ -45,18 +45,7 @@ class AuthorManager extends Component {
   };
 
   goAuthor = (author) => {
-    axios.get('/api/author/' + author.id)
-    .then(response => {
-        let author = response.data.author;
-        console.log('author', author);
-        this.props.onNotify(
-          'You are in the ' +   author.name + ' profile', 
-          'success'
-        );
-      })
-      .catch(error => {
-        console.log('Error getting the author', error);
-      });
+    this.props.history.push({pathname: '/author/' + author.id});
   };
 
   editAuthor = (author) => {
@@ -240,4 +229,4 @@ class AuthorManager extends Component {
   }
 }
 
-export default AuthorManager;
+export default withRouter(AuthorManager);

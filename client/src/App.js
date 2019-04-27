@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 
 import Loading from './components/Loading';
 import Header from './components/Header'
@@ -6,6 +7,7 @@ import Board from './components/Board'
 import Notifier from './components/Notifier';
 import BoardPanel from './components/BoardPanel'
 import AuthorManager from './components/Authors/AuthorManager';
+import Author from './components/Authors/Author';
 import PublicationManager from './components/Publications/PublicationManager';
 
 import './compiled/App.css';
@@ -26,7 +28,7 @@ class App extends Component {
     });
   };
 
-  notify = (message, messageType, messageTimeout, afterNotify) => {
+  notify = (message, messageType, messageTimeout) => {
     this.setState({
       notification: {
         message: message,
@@ -78,10 +80,12 @@ class App extends Component {
       <div className="App">
         {glassApp}
         {loadingApp}
+
         <Header
           title="Welcome to Chaining-me.Text"
           introduction="The new way of doing art, with posts" 
           />
+
         <AuthorManager 
           onToggleManager={this.toggleManager}
           isAuthorManagerVisible={this.state.isAuthorManagerVisible}
@@ -90,16 +94,34 @@ class App extends Component {
           onWait={this.wait}
           onStopWait={this.stopWait}
           />
+
         <Board>
           <BoardPanel>
-            <PublicationManager 
-              waiting={this.state.waiting}
-              onNotify={this.notify}
-              onWait={this.wait}
-              onStopWait={this.stopWait} 
-              />
+            <Route path="/" exact render={(props) => {
+              // console.log('Route props', props);
+              return <PublicationManager 
+                waiting={this.state.waiting}
+                onNotify={this.notify}
+                onWait={this.wait}
+                onStopWait={this.stopWait} 
+                />;
+              }} />
+              <Route path="/author/:id" render={(props) => {
+                return <Author 
+                  waiting={this.state.waiting}
+                  onNotify={this.notify}
+                  onWait={this.wait}
+                  onStopWait={this.stopWait}
+                  {...props}
+                  author={{
+                    id: 1, 
+                    name: 'Miguel Diganchi', 
+                    email: 'migueldiganchi@gmail.com', 
+                    birth_date: 'mayo 8, 1982'}} />
+              }} />
           </BoardPanel>
         </Board>
+
         <Notifier 
           notification={this.state.notification}
           waiting={this.state.waiting} />

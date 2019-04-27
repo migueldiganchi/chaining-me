@@ -1,5 +1,16 @@
 @import './../../assets/styles/_mixins';
 
+.App-author {
+    h2 {
+        margin: 0;
+        padding: 0;
+    }
+    p {
+        padding: 12px;
+        margin: 0 0 15px;
+    }
+}
+
 .author-list {
     flex-wrap: wrap; /* Grid Fallback */
   /* Supports Grid */
