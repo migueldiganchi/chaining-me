@@ -59,6 +59,37 @@
 		}
 	}
 
+	.App-toolbar {
+		@include border-radius(33px);
+		// @include bg-tr;
+		transition: visibility 0.3s ease, opacity 0.3s ease;
+		visibility: hidden;
+		opacity: 0;
+		display: inline-block;
+		// padding: 6px;
+		position: fixed;
+		left: 15px;
+		top: 15px;
+		&.active {
+			visibility: visible;
+			opacity: 1;
+		}
+		.keypad {
+			display: inline-block;
+			margin-bottom: 6px;
+			&:last-child {
+				margin-bottom: 0;
+			}
+			.do {
+				margin: 0 0 6px !important;
+				display: block;
+				&:last-child {
+					margin-bottom: 0 !important;
+				}
+			}
+		}
+	}
+
 	.App-notifier {
 		@include transition(right, 0.3s, ease-in-out);
 		position: fixed;
@@ -473,6 +504,7 @@ form {
 
 	&.do-primary {
 		background-color: #0d1138;
+		border: solid 1px #888a9e;
 		color: #fad744;
 	}
 
@@ -482,8 +514,10 @@ form {
 	}
 
 	&.do-secondary {
-		background-color: #fad744;
+		background-color: #222;
+		border: solid 1px #999 !important;
 		color: #fefeff;
+		border: none;
 	}
 
 	&.do-warning {

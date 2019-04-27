@@ -1,5 +1,27 @@
 @import './../../assets/styles/_mixins';
 
+.App-publication {
+    padding: 0 !important;
+    
+    .publication-content {
+        padding-bottom: 15px;
+    }
+    .publication-author {
+        color:  #849cb171;
+        * {
+            color:  #849cb171;
+        }
+        border-top: solid 1px #5e7c9771;
+        padding: 12px;
+        a {
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
 .publication-list {
     margin-bottom: 30px;
     .list-item {

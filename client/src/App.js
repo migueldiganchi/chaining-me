@@ -9,6 +9,7 @@ import BoardPanel from './components/BoardPanel'
 import AuthorManager from './components/Authors/AuthorManager';
 import Author from './components/Authors/Author';
 import PublicationManager from './components/Publications/PublicationManager';
+import Publication from './components/Publications/Publication';
 
 import './compiled/App.css';
 
@@ -80,44 +81,55 @@ class App extends Component {
       <div className="App">
         {glassApp}
         {loadingApp}
-
-        <Header
-          title="Welcome to Chaining-me.Text"
-          introduction="The new way of doing art, with posts" 
-          />
-
-        <AuthorManager 
-          onToggleManager={this.toggleManager}
-          isAuthorManagerVisible={this.state.isAuthorManagerVisible}
-          waiting={this.state.waiting}
-          onNotify={this.notify}
-          onWait={this.wait}
-          onStopWait={this.stopWait}
-          />
-
+        {/* Hader component */}
+        <Route path="/" exact render={() => {
+          return <Header
+            title="Welcome to Chaining-me.Text">
+            <p>The new way of doing art, <b>with posts</b></p>
+          </Header>
+        }} />
+        {/* Board component */}
         <Board>
           <BoardPanel>
-            <Route path="/" exact render={(props) => {
-              // console.log('Route props', props);
-              return <PublicationManager 
-                waiting={this.state.waiting}
-                onNotify={this.notify}
-                onWait={this.wait}
-                onStopWait={this.stopWait} 
-                />;
+            {/* Main page */}
+            <Route path="/" exact render={() => {
+              return [
+                <PublicationManager 
+                  waiting={this.state.waiting}
+                  onNotify={this.notify}
+                  onWait={this.wait}
+                  onStopWait={this.stopWait} 
+                />, 
+                <AuthorManager 
+                  onToggleManager={this.toggleManager}
+                  isAuthorManagerVisible={this.state.isAuthorManagerVisible}
+                  onGoAuthor={this.toggleManager}
+                  waiting={this.state.waiting}
+                  onNotify={this.notify}
+                  onWait={this.wait}
+                  onStopWait={this.stopWait}
+                  />
+                ];
               }} />
+              {/* Author page */}
               <Route path="/author/:id" render={(props) => {
                 return <Author 
                   waiting={this.state.waiting}
                   onNotify={this.notify}
                   onWait={this.wait}
                   onStopWait={this.stopWait}
-                  {...props}
-                  author={{
-                    id: 1, 
-                    name: 'Miguel Diganchi', 
-                    email: 'migueldiganchi@gmail.com', 
-                    birth_date: 'mayo 8, 1982'}} />
+                  isAuthorManagerVisible={this.state.isAuthorManagerVisible}
+                  {...props} />
+              }} />
+              {/* Publication page */}
+              <Route path="/publication/:id" render={(props) => {
+                return <Publication
+                  waiting={this.state.waiting}
+                  onNotify={this.notify}
+                  onWait={this.wait}
+                  onStopWait={this.stopWait}
+                  isAuthorManagerVisible={this.state.isAuthorManagerVisible}
+                  {...props}/>
               }} />
           </BoardPanel>
         </Board>

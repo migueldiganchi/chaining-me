@@ -5,7 +5,7 @@ function Header (props) {
     <header className="App-header">
       <h1 className="App-title">{props.title}</h1>
       <p>
-        {props.introduction}
+        {props.children}
       </p>
     </header>
   );

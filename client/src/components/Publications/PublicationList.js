@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 import PublicationListItem from './PublicationListItem';
 import PublicationForm from './PublicationForm';
@@ -22,6 +23,14 @@ function PublicationList (props) {
     return props.disableItems || 
      (props.editingPublication && props.editingPublication.id !== publication.id) || 
      (props.removingPublication && props.removingPublication.id !== publication.id)
+  };
+
+  const goPublication = (publication) => {
+    console.log('go publication?', publication);
+    console.log(props);
+    props.history.push({
+      pathname: '/publication/' + publication.id
+    });
   };
 
   let newForm = null;
@@ -65,7 +74,7 @@ function PublicationList (props) {
               onStartRemoving={props.onStartRemoving}
               onConfirmRemoving={props.onConfirmRemoving}
               onCancelRemoving={props.onCancelRemoving}
-              onOpen={props.onOpen} />
+              onOpen={goPublication} />
         })}
       </div>
       {paginator}
@@ -73,4 +82,4 @@ function PublicationList (props) {
   );
 };
 
-export default PublicationList;
+export default withRouter(PublicationList);

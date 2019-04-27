@@ -1,10 +1,13 @@
-import React, {Component} from 'react';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 import PublicationList from './PublicationList';
+import PublicationListTitle from './PublicationListTitle';
 import Searcher from './../Searcher';
 
-class PublicationManager extends Component {
+class PublicationManager extends React.Component {
+
   state = {
     newPublication: null,
     publication: null,
@@ -38,26 +41,19 @@ class PublicationManager extends Component {
   };
 
   getPublications = () => {
-    console.log('Publication manager did mount!');
     this.props.onWait(true);
     axios.get('/api/publications')
       .then(response => {
         this.props.onStopWait();
-        console.log('response', response);
         this.setState({
           publications: response.data.publications
         });
-        console.log('response', response);
       })
       .catch(error => {
         this.props.onStopWait();
         console.error('Application error: ', error);
       });
   };
-  
-  goPublication(publication) {
-    console.log('go publication?', publication);
-  }
 
   createPublication = (publication) => {
     console.log('creating publication', publication);
@@ -126,32 +122,26 @@ class PublicationManager extends Component {
 
   render () {
     let searcher = null;
-    let keypadTitle = null;
+    let publicationListTitle = null;
     
     if (!this.state.newPublication && !this.state.editingPublication) {
       searcher = <Searcher 
         onSearch={this.getPublications}
         onOrder={this.orderPublications}
         />;
-      keypadTitle = (
-        <div className="keypad board-panel-keypad">
-          <div className="text">
-            <span>Publications</span>
-            <small>{this.state.publications.length} results</small>
-          </div>
-          <a className="do do-success"
-            onClick={this.createPublication}>
-            <i className="fas fa-plus" />
-            Publication
-          </a>
-        </div>
+      publicationListTitle = (
+        <PublicationListTitle 
+          title="Publications"
+          results={this.state.publications.length}
+          publications={this.state.publications}
+          onCreatePublication={this.createPublication} />
       );
     }
 
     return (
       <div>
         {searcher}
-        {keypadTitle}
+        {publicationListTitle}
         <PublicationList
           newPublication={this.state.newPublication}
           editingPublication={this.state.editingPublication}
@@ -163,7 +153,6 @@ class PublicationManager extends Component {
           onNext={this.goNextPage}
           onLast={this.goLastPage}
           onSave={this.savePublication}
-          onOpen={this.goPublication}
           onCancel={this.cancelPublicationForm}
           onEdit={this.editPublication}
           onStartRemoving={this.startRemoving}
@@ -175,4 +164,4 @@ class PublicationManager extends Component {
   }
 }
 
-export default PublicationManager;
+export default withRouter(PublicationManager);

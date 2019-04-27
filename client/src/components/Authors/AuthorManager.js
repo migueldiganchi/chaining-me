@@ -45,7 +45,11 @@ class AuthorManager extends React.Component {
   };
 
   goAuthor = (author) => {
-    this.props.history.push({pathname: '/author/' + author.id});
+    this.props.history.push({
+      pathname: '/author/' + author.id
+    });
+    // close manager
+    this.props.onGoAuthor();
   };
 
   editAuthor = (author) => {
