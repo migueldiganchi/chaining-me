@@ -85,7 +85,7 @@ class PublicationManager extends React.Component {
     this.props.onWait("Removing publication...");
     setTimeout(() => {
       this.props.onStopWait();
-      this.props.onNotify('Publication removed successfuly');
+      this.props.onNotify('Publication removed successfully');
       this.cancelRemoving();
     }, 3000);
   };
@@ -103,7 +103,7 @@ class PublicationManager extends React.Component {
     this.props.onWait(loadingMessage);
     setTimeout(() => {
       this.props.onStopWait();
-      this.props.onNotify('Publication saved successfuly!', 'success');
+      this.props.onNotify('Publication saved successfully!', 'success');
       this.cancelPublicationForm();
     }, 3000);
   };

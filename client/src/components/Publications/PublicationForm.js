@@ -36,7 +36,7 @@ class PublicationForm extends Component {
     let formTitle = <h4>{this.props.publication.id ? 'Editing' : 'New'} Publication</h4>
 
     return(
-      <div>
+      <div className="form-container">
         {formTitle}
         <form action="/publications" 
           method="post"

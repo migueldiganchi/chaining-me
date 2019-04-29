@@ -24,26 +24,6 @@ class AuthorManager extends React.Component {
       });
   }
 
-  saveAuthor = (author) => {
-    console.log("saving author?", author);
-    let loadingMessage = author.id ? 'Saving author...' : 'Creating author...';
-    let method = author.id ? axios.put : axios.post;
-    this.props.onWait(loadingMessage);
-    method('api/author', author)
-      .then(response => {
-        console.log('response', response);
-      })
-      .catch(error => {
-        console.log('Client error', error);
-      });
-
-    setTimeout(() => {
-      this.props.onStopWait();
-      this.props.onNotify('Author saved successfuly!', 'success');
-      this.cancelAuthorForm();
-    }, 3000);
-  };
-
   goAuthor = (author) => {
     this.props.history.push({
       pathname: '/author/' + author.id
@@ -85,7 +65,7 @@ class AuthorManager extends React.Component {
     this.props.onWait('Removing author...');
     setTimeout(() => {
       this.props.onStopWait();
-      this.props.onNotify('Author removed successfuly', 'success');
+      this.props.onNotify('Author removed successfully', 'success');
       this.cancelRemoving();
     }, 3000);
   };
@@ -168,7 +148,7 @@ class AuthorManager extends React.Component {
       commanderAuthor = this.state.editingAuthor;
       commanderAuthorTitle = 'Editing Author';
     } else if (this.state.removingAuthor) {
-      commanderAuthorTitle = 'Are you sure?'
+      commanderAuthorTitle = 'Removing: Are you sure?'
     }
 
     let commanderKeypad = this.getCommanderKeypad(commanderAuthor);
@@ -194,7 +174,6 @@ class AuthorManager extends React.Component {
       commanderBody = (
         <AuthorForm 
           author={commanderAuthor}
-          onSave={this.saveAuthor}
           onCancel={this.cancelAuthorForm} 
           waiting={this.props.waiting}
           />

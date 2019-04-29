@@ -3,15 +3,15 @@
 .App-publication {
     padding: 0 !important;
     
-    .publication-content {
+    .info-block {
         padding-bottom: 15px;
+        margin-bottom: 15px;
     }
     .publication-author {
         color:  #849cb171;
         * {
             color:  #849cb171;
         }
-        border-top: solid 1px #5e7c9771;
         padding: 12px;
         a {
             text-decoration: none;

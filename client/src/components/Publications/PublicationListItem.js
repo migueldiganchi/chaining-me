@@ -33,7 +33,7 @@ function PublicationListItem (props) {
   if (props.isRemoving) {
     listItemClassName = 'list-item removing';
     confirmation = <div className="keypad confirmation fixed">
-      <h4>Are you sure?</h4>
+      <h4>Removing: Are you sure?</h4>
     </div>;
     keypad = <div className="keypad fixed">
       <button type="button"

@@ -273,7 +273,6 @@
 				text-align: left;
 				h5 {
 					color: #fff;
-					text-shadow: 1px 1px 1px #111;
 					padding-left: 6px;
 					left: 0;
 					bottom: 0;
@@ -391,10 +390,14 @@ form {
 	}
 }
 
+.form-container {
+	text-align: center;
+}
+
 .form {
 	.field {
-		background-color: #586083;
 		@include border-radius(9px);
+		background-color: #586083;
 		padding: 6px;
 		margin-bottom: 6px;
 		&:last-child {
@@ -414,6 +417,28 @@ form {
 	}
 	.keypad {
 		margin-top: 15px;
+	}
+}
+
+.info-block {
+	@include border-radius(9px);
+	@include transition(background-color, 0.3s, ease-in-out);
+	box-shadow: inset 0px 0 12px 9px #3c436b;
+	border: none;
+	padding: 12px;
+	background-color: #586083;
+	margin-top: 30px;
+	text-align: center;
+	
+	.keypad {
+		margin-top: 21px;
+		display: inline-block;
+	}
+
+	&.removing {
+		box-shadow: none;
+		background-color: #ef5455;
+		color: #fff;
 	}
 }
 
@@ -445,7 +470,6 @@ form {
 		color: #fff;
 		font-size: 11px;
 		line-height: 33px;
-		text-shadow: 1px 1px 1px #333;
 	}
 }
 

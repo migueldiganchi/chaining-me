@@ -45,7 +45,7 @@ exports.createAuthor = (req, res) => {
       console.log('authorsController.createAuthor result', result);
       res.json({
         status: true,
-        message: 'Author created successfuly!'
+        message: 'Author created successfully!'
       });
     })
     .catch(error => {
@@ -66,7 +66,7 @@ exports.updateAuthor = (req, res) => {
       console.log('authorsController.updateAuthor result', result);
       res.json({
         status: true,
-        message: 'Author updated successfuly!'
+        message: 'Author updated successfully!'
       });
     })
     .catch(error => {

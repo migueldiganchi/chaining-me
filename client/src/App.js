@@ -29,7 +29,7 @@ class App extends Component {
     });
   };
 
-  notify = (message, messageType, messageTimeout) => {
+  notify = (message, messageType, messageTimeout, callback) => {
     this.setState({
       notification: {
         message: message,
@@ -39,6 +39,9 @@ class App extends Component {
 
     setTimeout(() => {
       this.stopNotify();
+      if (callback) {
+        callback();
+      }
     }, messageTimeout || 3000);
   }
 
@@ -83,8 +86,7 @@ class App extends Component {
         {loadingApp}
         {/* Hader component */}
         <Route path="/" exact render={() => {
-          return <Header
-            title="Welcome to Chaining-me.Text">
+          return <Header title="Welcome to Chaining-me.Text">
             <p>The new way of doing art, <b>with posts</b></p>
           </Header>
         }} />
@@ -95,12 +97,14 @@ class App extends Component {
             <Route path="/" exact render={() => {
               return [
                 <PublicationManager 
+                  key="1"
                   waiting={this.state.waiting}
                   onNotify={this.notify}
                   onWait={this.wait}
                   onStopWait={this.stopWait} 
                 />, 
                 <AuthorManager 
+                  key="2"
                   onToggleManager={this.toggleManager}
                   isAuthorManagerVisible={this.state.isAuthorManagerVisible}
                   onGoAuthor={this.toggleManager}
@@ -111,25 +115,25 @@ class App extends Component {
                   />
                 ];
               }} />
-              {/* Author page */}
-              <Route path="/author/:id" render={(props) => {
-                return <Author 
-                  waiting={this.state.waiting}
-                  onNotify={this.notify}
-                  onWait={this.wait}
-                  onStopWait={this.stopWait}
-                  isAuthorManagerVisible={this.state.isAuthorManagerVisible}
-                  {...props} />
+            {/* Author page */}
+            <Route path="/author/:id" render={(props) => {
+              return <Author 
+                waiting={this.state.waiting}
+                onNotify={this.notify}
+                onWait={this.wait}
+                onStopWait={this.stopWait}
+                isAuthorManagerVisible={this.state.isAuthorManagerVisible}
+                {...props} />
               }} />
-              {/* Publication page */}
-              <Route path="/publication/:id" render={(props) => {
-                return <Publication
-                  waiting={this.state.waiting}
-                  onNotify={this.notify}
-                  onWait={this.wait}
-                  onStopWait={this.stopWait}
-                  isAuthorManagerVisible={this.state.isAuthorManagerVisible}
-                  {...props}/>
+            {/* Publication page */}
+            <Route path="/publication/:id" render={(props) => {
+              return <Publication
+                waiting={this.state.waiting}
+                onNotify={this.notify}
+                onWait={this.wait}
+                onStopWait={this.stopWait}
+                isAuthorManagerVisible={this.state.isAuthorManagerVisible}
+                {...props}/>
               }} />
           </BoardPanel>
         </Board>

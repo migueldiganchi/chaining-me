@@ -14,14 +14,17 @@ function Toolbar (props) {
         </Link>
       </div>
       <br />
-      <div className="keypad keypad-right">
-        <a className="do do-circular do-danger">
-          <i className="fas fa-eraser" />
-        </a>
-        <a className="do do-circular do-secondary">
-          <i className="fas fa-pencil-alt" />
-        </a>
-      </div>
+      {props.showControls ? 
+        <div className="keypad keypad-right">
+          <a className="do do-circular do-danger"
+            onClick={props.onStartRemoving}>
+            <i className="fas fa-eraser" />
+          </a>
+          <a className="do do-circular do-secondary"
+            onClick={props.onEdit}>
+            <i className="fas fa-pencil-alt" />
+          </a>
+        </div> : null}
     </div>
   );
 }
