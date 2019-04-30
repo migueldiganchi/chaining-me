@@ -41,6 +41,7 @@ function PublicationList (props) {
       publication={props.newPublication}
       onCancel={props.onCancel}
       onSave={props.onSave}
+      onNotify={props.onNotify}
       />
   }
 
@@ -63,6 +64,7 @@ function PublicationList (props) {
               key={publication.id}
               publication={props.editingPublication}
               onCancel={props.onCancel}
+              onNotify={props.onNotify}
               onSave={props.onSave}
               /> : 
             <PublicationListItem 

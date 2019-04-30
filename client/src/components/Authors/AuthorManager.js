@@ -175,6 +175,8 @@ class AuthorManager extends React.Component {
         <AuthorForm 
           author={commanderAuthor}
           onCancel={this.cancelAuthorForm} 
+          onNotify={this.props.onNotify}
+          onWait={this.props.onWait}
           waiting={this.props.waiting}
           />
       );

@@ -99,7 +99,9 @@ class Publication extends React.Component {
         { this.state.editingPublication ? 
           <PublicationForm 
             publication={this.state.editingPublication}
-            onCancel={this.cancelPublicationForm} /> :
+            onCancel={this.cancelPublicationForm}
+            onNotify={this.props.onNotify}
+            /> :
           this.getPublicationInfo() 
         }
         <div className="publication-author">

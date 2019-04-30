@@ -154,6 +154,7 @@ class PublicationManager extends React.Component {
           removingPublication={this.state.removingPublication}
           publications={this.state.publications}
           disableItems={this.state.newPublication}
+          onNotify={this.props.onNotify}
           onFirst={this.goFirstPage}
           onPrevious={this.goPreviousPage}
           onNext={this.goNextPage}

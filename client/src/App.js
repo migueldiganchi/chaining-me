@@ -46,7 +46,6 @@ class App extends Component {
   }
 
   notifyError = (message) => {
-    console.log(message);
     this.notify(message, 'error');
   };
 
@@ -55,7 +54,6 @@ class App extends Component {
   };
 
   wait = (message) => {
-    console.log('start waiting...');
     this.setState({
       waiting: message,
       notification: {
@@ -65,7 +63,6 @@ class App extends Component {
   }
 
   stopWait = () => {
-    console.log('stop waiting');
     this.setState({
       waiting: null,
       notification: null

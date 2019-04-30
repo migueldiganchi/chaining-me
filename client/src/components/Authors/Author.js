@@ -185,7 +185,10 @@ class Author extends React.Component {
             <AuthorForm 
               showFormTitle={true}
               author={this.state.editingAuthor}
-              onCancel={this.cancelAuthorForm} 
+              onNotify={this.props.onNotify}
+              onCancel={this.cancelAuthorForm}
+              onWait={this.props.onWait}
+              onStopWait={this.props.onStopWait}
               /> 
             : 
             this.getAuthorInfo()}

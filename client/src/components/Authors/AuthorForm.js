@@ -6,7 +6,10 @@ class AuthorForm extends Component {
     name: '',
     email: '',
     birth_date: '',
-    waiting: null
+    waiting: null,
+    nameClassName: 'field',
+    emailClassName: 'field',
+    birthDateClassName: 'field'
   };
 
   componentDidMount() {
@@ -29,11 +32,13 @@ class AuthorForm extends Component {
   };
 
   saveAuthor = (author) => {
-    console.log("saving author?", author);
+    if (!this.validate(author)) {
+      return;
+    }
     let loadingMessage = author.id ? 'Saving author...' : 'Creating author...';
     let method = author.id ? axios.put : axios.post;
-    this.waitSending();
     this.props.onWait(loadingMessage);
+    this.waitSending();
     method('api/author', author)
       .then(response => {
         console.log('response', response);
@@ -66,6 +71,37 @@ class AuthorForm extends Component {
     this.setState({birth_date: e.target.value});
   };
 
+  validate = (author) => {
+    let error = false;
+
+    if (author.name == '') {
+      this.setState({ nameClassName: 'field error' });
+      error = true;
+    } else {
+    }
+    
+    if (author.email == '') {
+      this.setState({ emailClassName: 'field error' });
+      error = true;
+    } else {
+    }
+    
+    if (author.birth_date == '') {
+      this.setState({ birthDateClassName: 'field error' });
+      error = true;
+    }
+    
+    if (!error) {
+      this.setState({ nameClassName: 'field' });
+      this.setState({ emailClassName: 'field' });
+      this.setState({ birthDateClassName: 'field' });
+    } else {
+      this.props.onNotify('Ups, check your information please', 'error');
+    }
+
+    return !error;
+  };
+
   render () {
     let cancelButtonClassName = this.state.waiting ? 
       'do disabled' : 
@@ -84,7 +120,7 @@ class AuthorForm extends Component {
           onSubmit={this.onSubmitAuthor}
           className="form">
           <div className="form-body">
-            <div className="field">
+            <div className={this.state.nameClassName}>
               <input type="text"
                 disabled={this.props.waiting}
                 autoFocus
@@ -92,14 +128,14 @@ class AuthorForm extends Component {
                 placeholder="Name"
                 value={this.state.name}  />
             </div>
-            <div className="field">
+            <div className={this.state.emailClassName}>
               <input type="email"
                 disabled={this.props.waiting}
                 onChange={this.typingEmail}
                 placeholder="Email"
                 value={this.state.email}  />
             </div>
-            <div className="field">
+            <div className={this.state.birthDateClassName}>
               <input type="text"
                 disabled={this.props.waiting}
                 onChange={this.typingBirthdate}
