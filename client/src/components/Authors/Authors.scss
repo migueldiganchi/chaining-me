@@ -5,7 +5,10 @@
 
     .author-info {
         text-align: left;
-        margin-bottom: 90px;
+        margin-bottom: 81px;
+        &.creating {
+            margin-bottom: 0 !important;
+        }
         .author-info-picture {
             text-align: center;
             height: 90px;

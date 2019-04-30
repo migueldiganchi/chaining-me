@@ -11,7 +11,9 @@ import botWink from './../../assets/media/bot-wink.gif';
 class Author extends React.Component {
   state = {
     author: null,
+    creationEnabled: false,
     editingAuthor: null,
+    removingAuthor: null,
     waiting: null
   };
 
@@ -142,6 +144,14 @@ class Author extends React.Component {
         { authorBodyActions }
       </div>
     );
+  };
+
+  createPublication = () => {
+    this.setState({creationEnabled: true});
+  };
+
+  cancelNewPublication = () => {
+    this.setState({creationEnabled: false});
   }
 
   render () {
@@ -151,7 +161,12 @@ class Author extends React.Component {
         onNotify={this.props.onNotify}
         onWait={this.props.onWait}
         onStopWait={this.props.onStopWait} 
+        onCreatePublication={this.createPublication}
+        onCancelPublicationForm={this.cancelNewPublication}
         /> : null;
+
+    let authorInfoClassName = !this.state.creationEnabled ? 
+      'author-info' : 'author-info creating';
 
     return (
       this.state.author ? 
@@ -164,7 +179,7 @@ class Author extends React.Component {
         onStartRemoving={this.startRemoving}
         />
 
-        <div className="author-info">
+        <div className={authorInfoClassName}>
           {this.state.editingAuthor 
             ? 
             <AuthorForm 

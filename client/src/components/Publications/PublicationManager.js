@@ -64,6 +64,9 @@ class PublicationManager extends React.Component {
         body: ''
       }
     });
+    if (this.props.onCreatePublication) {
+      this.props.onCreatePublication();
+    }
   };
 
   editPublication = (publication) => {
@@ -113,6 +116,9 @@ class PublicationManager extends React.Component {
       newPublication: null,
       editingPublication: null
     });
+    if (this.props.onCancelPublicationForm) {
+      this.props.onCancelPublicationForm();
+    }
   };
 
   orderPublications = (field, orientation) => {
