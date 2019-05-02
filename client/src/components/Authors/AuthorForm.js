@@ -74,19 +74,19 @@ class AuthorForm extends Component {
   validate = (author) => {
     let error = false;
 
-    if (author.name == '') {
+    if (author.name === '') {
       this.setState({ nameClassName: 'field error' });
       error = true;
     } else {
     }
     
-    if (author.email == '') {
+    if (author.email === '') {
       this.setState({ emailClassName: 'field error' });
       error = true;
     } else {
     }
     
-    if (author.birth_date == '') {
+    if (author.birth_date === '') {
       this.setState({ birthDateClassName: 'field error' });
       error = true;
     }

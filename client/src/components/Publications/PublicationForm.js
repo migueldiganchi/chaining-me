@@ -34,18 +34,18 @@ class PublicationForm extends Component {
   validate = (publication) => {
     let error = false;
     
-    if (publication.title == '') {
+    if (publication.title === '') {
       error = true;
       this.setState({titleClassName: 'field error'});
     } else {
     }
     
-    if (publication.body == '') {
+    if (publication.body === '') {
       error = true;
       this.setState({bodyClassName: 'field error'})
     }
     
-    if (publication.date_time == '') {
+    if (publication.date_time === '') {
       error = true;
       this.setState({dateTimeClassName: 'field error'});
     }
