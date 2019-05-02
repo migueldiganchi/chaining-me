@@ -39,12 +39,18 @@ class AuthorForm extends Component {
     let method = author.id ? axios.put : axios.post;
     this.props.onWait(loadingMessage);
     this.waitSending();
-    method('api/author', author)
+    method('/api/author/' + author.id, author)
       .then(response => {
-        console.log('response', response);
         this.props.onStopWait();
-        this.props.onNotify('Author saved successfully!', 'success');
+        let message = response.data.message;
+        let messageType = response.data.status ? 'success' : 'error';
+        setTimeout(() => {
+          this.props.onNotify(message, messageType);
+        }, 450);
         this.props.onCancel();
+        if (this.props.onSave) {
+          this.props.onSave(author);
+        } 
       })
       .catch(error => {
         console.log('Client error', error);

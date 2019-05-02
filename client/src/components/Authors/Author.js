@@ -48,7 +48,6 @@ class Author extends React.Component {
   };
 
   getPublications = () => {
-    console.log('Publication manager did mount in Author profile!');
     this.props.onWait(true);
     axios.get('/api/publications')
       .then(response => {
@@ -56,8 +55,6 @@ class Author extends React.Component {
         this.setState({
           publications: response.data.publications
         });
-
-        this.props.onNotify(this.state.author.name + ' profile');
       })
       .catch(error => {
         this.props.onStopWait();
@@ -82,11 +79,6 @@ class Author extends React.Component {
     setTimeout(() => {
       this.props.onNotify('Author removed successfully');
     }, 3000);
-  };
-
-  goBack = () => {
-    console.log('going back?');
-    this.props.history.goBack();
   };
 
   getAuthorInfo = () => {
@@ -152,7 +144,11 @@ class Author extends React.Component {
 
   cancelNewPublication = () => {
     this.setState({creationEnabled: false});
-  }
+  };
+
+  onSaveAuthor = (author) => {
+    this.getAuthor(author.id);
+  };
 
   render () {
     let publicationManager = !this.state.removingAuthor && !this.state.editingAuthor ?
@@ -188,6 +184,7 @@ class Author extends React.Component {
               onNotify={this.props.onNotify}
               onCancel={this.cancelAuthorForm}
               onWait={this.props.onWait}
+              onSave={this.onSaveAuthor}
               onStopWait={this.props.onStopWait}
               /> 
             : 

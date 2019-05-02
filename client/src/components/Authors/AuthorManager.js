@@ -15,6 +15,10 @@ class AuthorManager extends React.Component {
   }
 
   componentDidMount () {
+    this.getAuthors();
+  }
+  
+  getAuthors = () => {
     axios.get('/api/authors')
       .then(response => {
         this.setState({authors: response.data.authors});
@@ -134,6 +138,11 @@ class AuthorManager extends React.Component {
     )
   };
 
+
+  onSaveAuthor = () => {
+    this.getAuthors();
+  }
+
   render () {
     let commanderAuthor = null;
     let commanderAuthorTitle = null;
@@ -177,6 +186,8 @@ class AuthorManager extends React.Component {
           onCancel={this.cancelAuthorForm} 
           onNotify={this.props.onNotify}
           onWait={this.props.onWait}
+          onStopWait={this.props.onStopWait}
+          onSave={this.onSaveAuthor}
           waiting={this.props.waiting}
           />
       );
