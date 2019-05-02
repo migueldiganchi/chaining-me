@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const path = require('path');
 
 // Constants
@@ -19,6 +20,9 @@ const app = express();
 // Static files
 app.use(express.static(CLIENT_BUILD_PATH));
 
+// Setting body parsers
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // API
 app.get('/api', applicationController.welcome);

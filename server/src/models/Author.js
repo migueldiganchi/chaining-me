@@ -16,24 +16,24 @@ module.exports = class Author {
     return db.execute('SELECT * FROM authors WHERE id = ?', [id]);
   }
 
-  save () {
-    if (this.id) {
+  static saveAuthor (name, email, birthDate, id) {
+    if (!id) {
       return db.execute('INSERT INTO authors (name, email, birth_date) VALUES (?, ?, ?, ?)',[
-        this.name,
-        this.email,
-        this.birthDate
+        name,
+        email,
+        birthDate
       ]);
     } else {
       return db.execute('UPDATE authors SET name = ?, email = ?, birth_date = ? WHERE id = ?',[
-        this.name,
-        this.email,
-        this.birthDate,
-        this.id
+        name,
+        email,
+        birthDate,
+        id
       ]);
     }
   }
 
-  remove () {
-    return db.execute('DELETE FROM authors WHERE id = ?', [this.id]);
+  static removeAuthor (id) {
+    return db.execute('DELETE FROM authors WHERE id = ?', [id]);
   }
 }

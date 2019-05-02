@@ -4,7 +4,6 @@ exports.getAuthors = (req, res) => {
   Author.getAuthors()
     .then(result => {
       let authors = result[0];
-      console.log("authorsController.getAuthors", authors);
       res.json({
         status: true,
         authors: authors
@@ -12,6 +11,10 @@ exports.getAuthors = (req, res) => {
     })
     .catch(error => {
       console.log("authorsController.getAuthors error", error);
+      res.json({
+        status: false,
+        message: 'Error getting authors'
+      });
     });
 };
 
@@ -21,7 +24,6 @@ exports.getAuthor = (req, res) => {
   Author.getAuthor(id)
     .then(result => {
       let author = result[0][0];
-      console.log('author in authorsController.getAuthor', author);
       res.json({
         status: true,
         author: author
@@ -29,6 +31,10 @@ exports.getAuthor = (req, res) => {
     })
     .catch(error => {
       console.log('authorsController.getAuthor error', error);
+      res.json({
+        status: false,
+        message: 'Error getting an author'
+      });
     });
 };
 
@@ -38,32 +44,30 @@ exports.createAuthor = (req, res) => {
   const birthDate = req.body.birth_date;
   const author = new Author(name, email, birthDate);
 
-  console.log('request', req);
-
   author.save()
-    .then(result => {
-      console.log('authorsController.createAuthor result', result);
+    .then(() => {
       res.json({
         status: true,
         message: 'Author created successfully!'
       });
     })
     .catch(error => {
+      res.json({
+        status: false,
+        message: 'Error creating author'
+      });
       console.log('authorsController.createAuthor error', error);
     });
 };
 
 exports.updateAuthor = (req, res) => {
-  const id = req.query.id
-  const author = Author.getAuthor(id);
+  const id = req.params.id
+  const name = req.body.name;
+  const email = req.body.email;
+  const birthDate = new Date(); // @todo: req.body.birth_date;
 
-  author.name = req.body.name;
-  author.email = req.body.email;
-  author.birthDate = req.body.birth_date;
-
-  author.save()
-    .then(result => {
-      console.log('authorsController.updateAuthor result', result);
+  Author.saveAuthor(name, email, birthDate, id)
+    .then(() => {
       res.json({
         status: true,
         message: 'Author updated successfully!'
@@ -71,17 +75,19 @@ exports.updateAuthor = (req, res) => {
     })
     .catch(error => {
       console.log('authorsController.updateAuthor error', error);
+      res.json({
+        status: false,
+        message: 'Error updating author'
+      });
     });
 
 };
 
 exports.removeAuthor = (req, res) => {
   const id = req.query.id
-  const author = Author.getAuthor(id);
   
-  author.remove()
-    .then(result => {
-      console.log('authorsController.removeAuthor result', result);
+  Author.removeAuthor(id)
+    .then(() => {
       res.json({
         status: true,
         message: 'Author removed successfully'
@@ -89,5 +95,9 @@ exports.removeAuthor = (req, res) => {
     })
     .catch(error => {
       console.log('authorsController.removeAuthor error', error);
+      res.json({
+        status: false,
+        message: 'Error removing author'
+      });
     });
 }
