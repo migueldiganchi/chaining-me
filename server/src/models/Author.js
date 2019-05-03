@@ -18,7 +18,7 @@ module.exports = class Author {
 
   static saveAuthor (name, email, birthDate, id) {
     if (!id) {
-      return db.execute('INSERT INTO authors (name, email, birth_date) VALUES (?, ?, ?, ?)',[
+      return db.execute('INSERT INTO authors (name, email, birth_date) VALUES (?, ?, ?)',[
         name,
         email,
         birthDate

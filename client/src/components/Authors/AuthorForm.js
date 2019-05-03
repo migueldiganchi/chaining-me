@@ -37,9 +37,12 @@ class AuthorForm extends Component {
     }
     let loadingMessage = author.id ? 'Saving author...' : 'Creating author...';
     let method = author.id ? axios.put : axios.post;
+    let url = author.id 
+      ? '/api/author/' + author.id 
+      : '/api/author/';
     this.props.onWait(loadingMessage);
     this.waitSending();
-    method('/api/author/' + author.id, author)
+    method(url, author)
       .then(response => {
         this.props.onStopWait();
         let message = response.data.message;

@@ -41,10 +41,9 @@ exports.getAuthor = (req, res) => {
 exports.createAuthor = (req, res) => {
   const name = req.body.name;
   const email = req.body.email;
-  const birthDate = req.body.birth_date;
-  const author = new Author(name, email, birthDate);
+  const birthDate = new Date(); // @todo: req.body.birth_date;
 
-  author.save()
+  Author.saveAuthor(name, email, birthDate)
     .then(() => {
       res.json({
         status: true,
