@@ -149,6 +149,7 @@ class PublicationManager extends React.Component {
         {searcher}
         {publicationListTitle}
         <PublicationList
+          author={this.props.author}
           newPublication={this.state.newPublication}
           editingPublication={this.state.editingPublication}
           removingPublication={this.state.removingPublication}

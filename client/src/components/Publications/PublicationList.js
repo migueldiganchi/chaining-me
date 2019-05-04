@@ -42,6 +42,7 @@ function PublicationList (props) {
       onCancel={props.onCancel}
       onSave={props.onSave}
       onNotify={props.onNotify}
+      author={props.author}
       />
   }
 
@@ -66,6 +67,7 @@ function PublicationList (props) {
               onCancel={props.onCancel}
               onNotify={props.onNotify}
               onSave={props.onSave}
+              author={props.author}
               /> : 
             <PublicationListItem 
               key={publication.id}

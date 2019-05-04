@@ -87,24 +87,24 @@ class AuthorForm extends Component {
       this.setState({ nameClassName: 'field error' });
       error = true;
     } else {
+      this.setState({ nameClassName: 'field' });
     }
     
     if (author.email === '') {
       this.setState({ emailClassName: 'field error' });
       error = true;
     } else {
+      this.setState({ emailClassName: 'field' });
     }
     
     if (author.birth_date === '') {
       this.setState({ birthDateClassName: 'field error' });
       error = true;
+    } else {
+      this.setState({ birthDateClassName: 'field' });
     }
     
-    if (!error) {
-      this.setState({ nameClassName: 'field' });
-      this.setState({ emailClassName: 'field' });
-      this.setState({ birthDateClassName: 'field' });
-    } else {
+    if (error) {
       this.props.onNotify('Ups, check your information please', 'error');
     }
 

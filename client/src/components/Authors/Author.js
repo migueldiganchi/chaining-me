@@ -159,6 +159,7 @@ class Author extends React.Component {
         onStopWait={this.props.onStopWait} 
         onCreatePublication={this.createPublication}
         onCancelPublicationForm={this.cancelNewPublication}
+        author={this.state.author}
         /> : null;
 
     let authorInfoClassName = !this.state.creationEnabled ? 
