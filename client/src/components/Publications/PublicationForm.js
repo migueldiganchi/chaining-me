@@ -5,11 +5,8 @@ class PublicationForm extends Component {
 
   constructor(props) {
     super(props);
-    if (!props.author) {
-      this.loadAuthors();
-    } else {
-      alert('author loading needless');
-    }
+    // load authors is case there is not an author specified
+    this.loadAuthors();
   }
 
   state = {
@@ -38,7 +35,8 @@ class PublicationForm extends Component {
     let publication = {
       id: this.props.publication.id,
       title: this.state.title,
-      body: this.state.body
+      body: this.state.body,
+      author_id: this.state.authorId
     };
     if (!this.validate(publication)) {
       return;
@@ -69,8 +67,10 @@ class PublicationForm extends Component {
     } else {
       this.setState({ dateTimeClassName: 'field' });
     }
+
+    console.log('validating?', this.state.authorId);
     
-    if (!this.props.author && this.state.authorId < 1) {
+    if (!this.state.authorId || this.state.authorId < 1) {
       error = true;
       this.setState({ authorClassName: 'field error' });
     } else {
@@ -102,11 +102,9 @@ class PublicationForm extends Component {
   };
 
   loadAuthors = () => {
-    console.log('@todo: loading Authors?');
     axios.get('/api/authors')
       .then(response => {
         const authors = response.data.authors;
-        console.log('response: ', response);
         this.setState({ authors: authors });
       })
       .catch(error => {
@@ -115,34 +113,30 @@ class PublicationForm extends Component {
   };
 
   getAuthorSelectorControl = () => {
-    if (!this.state.authors || this.state.authors.length < 1) {
-      return null;
-    } else {
-      console.log('this.state.authors', this.state.authors);
-      return (
-        <div className={this.state.authorClassName}>
-          <select onChange={this.changingAuthor}>
-            <option value={0}>Select an author...</option>
-            {this.state.authors.map((author) => {
-              return (
-                <option 
-                  key={author.id} 
-                  value={author.id}>
-                  {author.name}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-      );
-    }
+    let disabled = this.props.author;
+    return (
+      <div className={this.state.authorClassName}>
+        <select disabled={disabled} 
+          value={this.state.authorId} 
+          onChange={this.changingAuthor}>
+          <option value={0}>Select an author...</option>
+          {this.state.authors.map((author) => {
+            return (
+              <option 
+                key={author.id} 
+                value={author.id}>
+                {author.name}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+    );
   };
 
   render() {
     let formTitle = <h4>{this.props.publication.id ? 'Editing' : 'New'} Publication</h4>
-    let authorControl = this.props.author ?
-      <input type="hidden" value={this.props.author.id} /> :
-      this.getAuthorSelectorControl();
+    let authorControl = this.getAuthorSelectorControl();
 
     return (
       <div className="form-container">

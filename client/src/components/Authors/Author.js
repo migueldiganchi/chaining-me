@@ -34,7 +34,6 @@ class Author extends React.Component {
     .then(response => {
         let author = response.data.author;
         this.setState({author: author});
-        this.getPublications();
       })
       .catch(error => {
         console.log('error', error);
@@ -45,21 +44,6 @@ class Author extends React.Component {
     this.setState({
       editingAuthor: null
     });
-  };
-
-  getPublications = () => {
-    this.props.onWait(true);
-    axios.get('/api/publications')
-      .then(response => {
-        this.props.onStopWait();
-        this.setState({
-          publications: response.data.publications
-        });
-      })
-      .catch(error => {
-        this.props.onStopWait();
-        console.error('Application error: ', error);
-      });
   };
 
   editAuthor = () => {

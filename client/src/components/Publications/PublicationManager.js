@@ -42,7 +42,11 @@ class PublicationManager extends React.Component {
 
   getPublications = () => {
     this.props.onWait(true);
-    axios.get('/api/publications')
+    let url = '/api/publications';
+    if (this.props.author) {
+      url = '/api/author/' + this.props.author.id + '/publications';
+    };
+    axios.get(url)
       .then(response => {
         this.props.onStopWait();
         this.setState({
@@ -100,15 +104,27 @@ class PublicationManager extends React.Component {
   };
 
   savePublication = (publication) => {
+    let method = publication.id ? axios.put : axios.post;
+    let url = publication.id 
+      ? '/api/publication/' + publication.id 
+      : '/api/publication';
     let loadingMessage = publication.id ? 
       'Saving publication...' : 
       'Creating publication...';
+    
+    // go server to save publication
     this.props.onWait(loadingMessage);
-    setTimeout(() => {
-      this.props.onStopWait();
-      this.props.onNotify('Publication saved successfully!', 'success');
-      this.cancelPublicationForm();
-    }, 3000);
+    method(url, publication)
+      .then(() => {
+        this.props.onStopWait();
+        this.props.onNotify('Publication saved successfully!', 'success');
+        this.getPublications();
+        this.cancelPublicationForm();
+      })
+      .catch(error => {
+        console.log('error.response?', error.response);
+        this.props.onNotify(error.response.message, 'error');
+      });
   };
 
   cancelPublicationForm = () => {

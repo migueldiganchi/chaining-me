@@ -13,6 +13,7 @@ const CLIENT_BUILD_PATH = path.join(__dirname, './../../client/build');
 // Controllers
 const applicationController = require('./controllers/application');
 const authorsController = require('./controllers/authors');
+const publicationsController = require('./controllers/publications');
 // App
 
 const app = express();
@@ -34,34 +35,15 @@ app.put('/api/author/:id', authorsController.updateAuthor);
 app.post('/api/author', authorsController.createAuthor);
 app.delete('/api/author/:id', authorsController.removeAuthor);
 
+// API: mix
+app.get('/api/author/:a_id/publications', publicationsController.getAuthorPublications);
+
 // API: Publications
-app.get('/api/publications', (req, res) => {
-  res.set('Content-Type', 'application/json');
-  let data = {
-    publications: [{
-      id: 1,
-      title: "Story nº 1",
-      body: "Publication longer content and description",
-      date_time: "May 8, 1982"
-    }, {
-      id: 2,
-      title: "Story nº 2",
-      body: "Publication longer content and description",
-      date_time: "May 30, 1982"
-    }, {
-      id: 3,
-      title: "Story nº 3",
-      body: "Publication longer content and description",
-      date_time: "May 21, 1982"
-    }, {
-      id: 4,
-      title: "Story nº 4",
-      body: "Publication longer content and description",
-      date_time: "May 21, 1982"
-    }]
-  };
-  res.send(JSON.stringify(data, null, 2));
-});
+app.get('/api/publications', publicationsController.getPublications);
+app.get('/api/publication/:id', publicationsController.getPublication);
+app.post('/api/publication', publicationsController.createPublication);
+app.put('/api/publication/:id', publicationsController.updatePublication);
+
 
 // All remaining requests return the React app, so it can handle routing.
 app.get('*', function(req, res) {

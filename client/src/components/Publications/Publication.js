@@ -3,34 +3,58 @@ import { Link, withRouter } from 'react-router-dom';
 
 import Toolbar from './../../components/Toolbar';
 import PublicationForm from './PublicationForm';
+import axios from 'axios';
 
 class Publication extends React.Component {
   state = {
     editingPublication: null,
     removingPublication: null,
-    publication: {
-      id: 1,
-      title: 'This would be the title',
-      body: 'This would be the body of the publication written by the author specified below',
-      date_time: '2012-12-12 12:12:12'
-    },
-    author: {
-      id: 2,
-      name: 'Diego Diganchi',
-      birth_date: '2018-08-30'
-    }
+    publication: null,
+    author: null
+  };
+
+  componentDidMount() {
+    let id = this.props.match.params.id;
+    this.getPublication(id);
+  };
+
+  getAuthor = (authorId) => {
+    axios.get('/api/author/' + authorId)
+      .then(response => {
+        let author = response.data.author;
+        this.setState({author: author});
+      })
+      .catch(error => {
+        this.props.onNotify(error.response.data.message, 'error');
+      })
+  };
+
+  getPublication = (id) => {
+    axios.get('/api/publication/' + id)
+      .then(response => {
+        let publication = response.data.publication;
+        console.log('response', publication);
+        this.setState({publication: publication});
+        if (publication.author_id) {
+          this.getAuthor(publication.author_id);
+        }
+        this.props.onNotify('You are in publication nº ' + publication.id, 'success');
+      })
+      .catch(error => {
+        this.props.onNotify(error.response.data.message, 'error');
+      });
   };
 
   editPublication = () => {
-    this.setState({editingPublication: this.state.publication});
+    this.setState({ editingPublication: this.state.publication });
   };
 
   startRemoving = () => {
-    this.setState({removingPublication: this.state.publication});
+    this.setState({ removingPublication: this.state.publication });
   };
 
   cancelRemoving = () => {
-    this.setState({removingPublication: null});
+    this.setState({ removingPublication: null });
   };
 
   confirmRemoving = () => {
@@ -43,11 +67,15 @@ class Publication extends React.Component {
   };
 
   getPublicationInfo = () => {
-    let infoBlockClassName = this.state.removingPublication ? 
+    if (!this.state.publication) {
+      return;
+    }
+
+    let infoBlockClassName = this.state.removingPublication ?
       'info-block removing' :
       'info-block';
 
-    let publicationBodyText = this.state.removingPublication ? 
+    let publicationBodyText = this.state.removingPublication ?
       <div className="confirmer">
         <h4>Removing: Are you sure?</h4>
       </div> : null;
@@ -60,7 +88,7 @@ class Publication extends React.Component {
       </div>
     );
 
-    let publicationBodyActions = this.state.removingPublication ? 
+    let publicationBodyActions = this.state.removingPublication ?
       <div className="confirmer">
         <div className="keypad">
           <a className="do"
@@ -80,36 +108,35 @@ class Publication extends React.Component {
 
     return <div className={infoBlockClassName}>
       {/* Confirmer text */}
-      { publicationBodyText }
+      {publicationBodyText}
       {/* Publication body information */}
-      { publicationBody }
+      {publicationBody}
       {/* Publication body confirmer actions */}
-      { publicationBodyActions }
+      {publicationBodyActions}
     </div>;
   };
 
   cancelPublicationForm = () => {
-    this.setState({editingPublication: null});
+    this.setState({ editingPublication: null });
   };
 
-  render () {
-    let authorPath = '/author/' + this.state.author.id;
+  render() {
     return (
       <div className="App-publication">
-        { this.state.editingPublication ? 
-          <PublicationForm 
+        {this.state.editingPublication ?
+          <PublicationForm
             publication={this.state.editingPublication}
             onCancel={this.cancelPublicationForm}
             onNotify={this.props.onNotify}
-            /> :
-          this.getPublicationInfo() 
-        }
-        <div className="publication-author">
-          by <Link to={authorPath}>
-            {this.state.author.name}
-          </Link>
-        </div>
-        <Toolbar 
+          /> :
+          this.getPublicationInfo()}
+        {this.state.author ?
+          <div className="publication-author">
+            by <Link to={'/author/' + this.state.author.id}>
+              {this.state.author.name}
+            </Link>
+          </div> : null}
+        <Toolbar
           isAuthorManagerVisible={this.props.isAuthorManagerVisible}
           showControls={!this.state.editingPublication && !this.state.removingPublication}
           onEdit={this.editPublication}

@@ -1,13 +1,6 @@
 const db = require('./../tools/database');
 
 module.exports = class Author {
-  constructor(name, email, birthDate) {
-    this.publications = [];
-    this.name = name;
-    this.email = email;
-    this.birthDate = birthDate;
-  }
-
   static getAuthors () {
     return db.execute('SELECT * FROM authors');
   }
@@ -36,4 +29,4 @@ module.exports = class Author {
   static removeAuthor (id) {
     return db.execute('DELETE FROM authors WHERE id = ?', [id]);
   }
-}
+};
