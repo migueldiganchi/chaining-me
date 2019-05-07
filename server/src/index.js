@@ -34,16 +34,14 @@ app.get('/api/author/:id', authorsController.getAuthor);
 app.put('/api/author/:id', authorsController.updateAuthor);
 app.post('/api/author', authorsController.createAuthor);
 app.delete('/api/author/:id', authorsController.removeAuthor);
-
-// API: mix
-app.get('/api/author/:a_id/publications', publicationsController.getAuthorPublications);
+app.get('/api/author/:id/publications', publicationsController.getAuthorPublications);
 
 // API: Publications
 app.get('/api/publications', publicationsController.getPublications);
 app.get('/api/publication/:id', publicationsController.getPublication);
 app.post('/api/publication', publicationsController.createPublication);
 app.put('/api/publication/:id', publicationsController.updatePublication);
-
+app.delete('/api/publication/:id', publicationsController.removePublication);
 
 // All remaining requests return the React app, so it can handle routing.
 app.get('*', function(req, res) {

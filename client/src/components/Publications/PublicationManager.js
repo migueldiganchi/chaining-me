@@ -88,13 +88,24 @@ class PublicationManager extends React.Component {
   };
 
   removePublication = (publication) => {
-    console.log('@todo: remove this publication ', publication);
+    let url = '/api/publication/' + publication.id;
+
     this.props.onWait("Removing publication...");
-    setTimeout(() => {
-      this.props.onStopWait();
-      this.props.onNotify('Publication removed successfully');
-      this.cancelRemoving();
-    }, 3000);
+    axios.delete(url)
+      .then(response => {
+        this.props.onStopWait();
+        this.cancelRemoving();
+        this.getPublications();
+        setTimeout(() => {
+          let messageType = response.data.status ? 'info' : 'error';
+          this.props.onNotify(response.data.message, messageType);
+        }, 300);
+      })
+      .catch( error => {
+        this.props.onStopWait();
+        this.cancelRemoving();
+        this.props.onNotify(error.response.data.message, 'error');
+      });
   };
 
   cancelRemoving = () => {
@@ -104,22 +115,29 @@ class PublicationManager extends React.Component {
   };
 
   savePublication = (publication) => {
-    let method = publication.id ? axios.put : axios.post;
-    let url = publication.id 
-      ? '/api/publication/' + publication.id 
-      : '/api/publication';
-    let loadingMessage = publication.id ? 
-      'Saving publication...' : 
-      'Creating publication...';
+    let isNewPublication = !publication.id;
+    let method = isNewPublication ? axios.post : axios.put;
+    let url = isNewPublication 
+      ? '/api/publication'
+      : '/api/publication/' + publication.id;
+    let loadingMessage = isNewPublication ? 
+      'Creating publication...' : 
+      'Saving publication...';
     
     // go server to save publication
     this.props.onWait(loadingMessage);
     method(url, publication)
-      .then(() => {
+      .then((response) => {
         this.props.onStopWait();
-        this.props.onNotify('Publication saved successfully!', 'success');
         this.getPublications();
         this.cancelPublicationForm();
+        setTimeout(() => {
+          let messageType = response.data.status 
+            ? (isNewPublication ? 'success' : 'info') 
+            : 'error';
+          let message = response.data.message;
+          this.props.onNotify(message, messageType);
+        }, 300);
       })
       .catch(error => {
         console.log('error.response?', error.response);

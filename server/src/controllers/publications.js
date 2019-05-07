@@ -12,7 +12,6 @@ exports.getPublications = (req, res) => {
     .catch(error => {
       console.log('PublicationController.getPublications error: ', error);
       res.json({
-        status: false,
         message: 'Error has ocourred getting publications'
       });
     });
@@ -30,6 +29,7 @@ exports.getPublication = (req, res) => {
       });
     })
     .catch(error => {
+      console.log('publicationsController.getPublication error', error);
       res.json({
         message: 'Error getting a publication'
       });
@@ -37,8 +37,7 @@ exports.getPublication = (req, res) => {
 };
 
 exports.getAuthorPublications = (req, res) => {
-  let authorId = req.params.a_id;
-
+  let authorId = req.params.id;
   
   Publication.getAuthorPublications(authorId)
   .then(result => {
@@ -95,6 +94,25 @@ exports.updatePublication = (req, res) => {
       console.log('PublicationsController.savePublication error: ', error);
       res.json({
         message: 'There has been an error during saving publication'
+      });
+    });
+};
+
+exports.removePublication = (req, res) => {
+  const id = req.params.id;
+  
+  Publication.removePublication(id)
+    .then((result) => {
+      console.log('PublicationsController.removePublication result', result);
+      res.json({
+        status: true,
+        message: 'Publication was removed successfully!'
+      });
+    })
+    .catch(error => {
+      console.log('PublicationsController.removePublication error', error);
+      res.json({
+        message: 'There has been an error removing the publication'
       });
     });
 };

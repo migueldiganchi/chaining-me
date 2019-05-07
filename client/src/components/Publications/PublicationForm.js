@@ -22,6 +22,9 @@ class PublicationForm extends Component {
       id: this.props.publication.id,
       title: this.props.publication.title,
       body: this.props.publication.body,
+      authorId: this.props.author ? 
+        this.props.author.id : 
+        this.props.publication.author_id,
       date_time: '2012-12-12 00:00:00',
       titleClassName: 'field',
       bodyClassName: 'field',
@@ -68,8 +71,6 @@ class PublicationForm extends Component {
       this.setState({ dateTimeClassName: 'field' });
     }
 
-    console.log('validating?', this.state.authorId);
-    
     if (!this.state.authorId || this.state.authorId < 1) {
       error = true;
       this.setState({ authorClassName: 'field error' });
@@ -113,11 +114,21 @@ class PublicationForm extends Component {
   };
 
   getAuthorSelectorControl = () => {
-    let disabled = this.props.author;
+    let disabled = false;
+    let authorId = null;
+    
+    if (this.props.author) {
+      disabled = true;
+      authorId = this.props.author.id;
+    } else if (this.props.publication.author_id) {
+      authorId = this.props.publication.author_id;
+    }
+
     return (
       <div className={this.state.authorClassName}>
-        <select disabled={disabled} 
-          value={this.state.authorId} 
+        <select 
+          disabled={disabled} 
+          value={authorId} 
           onChange={this.changingAuthor}>
           <option value={0}>Select an author...</option>
           {this.state.authors.map((author) => {
