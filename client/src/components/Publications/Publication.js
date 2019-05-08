@@ -120,12 +120,21 @@ class Publication extends React.Component {
     this.setState({ editingPublication: null });
   };
 
+  onSavePublication = (publication) => {
+    console.log('Saved publication', publication);
+    this.cancelPublicationForm();
+    this.getPublication(publication.id);
+  };
+
   render() {
     return (
       <div className="App-publication">
         {this.state.editingPublication ?
           <PublicationForm
             publication={this.state.editingPublication}
+            onWait={this.props.onWait}
+            onStopWait={this.props.onStopWait}
+            onSave={this.onSavePublication}
             onCancel={this.cancelPublicationForm}
             onNotify={this.props.onNotify}
           /> :

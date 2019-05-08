@@ -43,6 +43,8 @@ function PublicationList (props) {
       onSave={props.onSave}
       onNotify={props.onNotify}
       author={props.author}
+      onWait={props.onWait}
+      onStopWait={props.onStopWait}
       />
   }
 
@@ -68,6 +70,8 @@ function PublicationList (props) {
               onNotify={props.onNotify}
               onSave={props.onSave}
               author={props.author}
+              onWait={props.onWait}
+              onStopWait={props.onStopWait}
               /> : 
             <PublicationListItem 
               key={publication.id}

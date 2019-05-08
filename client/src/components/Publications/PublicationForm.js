@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 class PublicationForm extends Component {
@@ -33,7 +34,7 @@ class PublicationForm extends Component {
     });
   };
 
-  savePublication = (e) => {
+  onSubmitPublication = (e) => {
     e.preventDefault();
     let publication = {
       id: this.props.publication.id,
@@ -44,7 +45,45 @@ class PublicationForm extends Component {
     if (!this.validate(publication)) {
       return;
     }
-    this.props.onSave(publication);
+
+    this.savePublication(publication);
+
+    if (this.props.onSave) {
+      this.props.onSave(publication);
+    } 
+  };
+
+  savePublication = (publication) => {
+    let isNewPublication = !publication.id;
+    let method = isNewPublication ? axios.post : axios.put;
+    let url = isNewPublication 
+      ? '/api/publication'
+      : '/api/publication/' + publication.id;
+    let loadingMessage = isNewPublication ? 
+      'Creating publication...' : 
+      'Saving publication...';
+    
+    // go server to save publication
+    this.props.onWait(loadingMessage);
+    method(url, publication)
+      .then((response) => {
+        this.props.onStopWait();
+        setTimeout(() => {
+          let messageType = response.data.status 
+            ? (isNewPublication ? 'success' : 'info') 
+            : 'error';
+          let message = response.data.message;
+          this.props.onNotify(message, messageType);
+
+          if (this.props.onSave) {
+            this.props.onSave(publication);
+          }
+        }, 300);
+      })
+      .catch(error => {
+        console.log('error.response?', error.response);
+        this.props.onNotify(error.response.message, 'error');
+      });
   };
 
   validate = (publication) => {
@@ -109,7 +148,7 @@ class PublicationForm extends Component {
         this.setState({ authors: authors });
       })
       .catch(error => {
-        this.props.onNotify('There was a problem loading errors', 'error')
+        this.props.onNotify('There was a problem loading errors', error);
       });
   };
 
@@ -155,7 +194,7 @@ class PublicationForm extends Component {
         <form action="/publications"
           method="post"
           className="form"
-          onSubmit={this.savePublication}>
+          onSubmit={this.onSubmitPublication}>
           <div className="form-body">
             <div className={this.state.titleClassName}>
               <input type="text"
@@ -199,4 +238,4 @@ class PublicationForm extends Component {
   }
 }
 
-export default PublicationForm;
+export default withRouter(PublicationForm);

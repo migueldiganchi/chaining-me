@@ -138,11 +138,6 @@ class AuthorManager extends React.Component {
     )
   };
 
-
-  onSaveAuthor = () => {
-    this.getAuthors();
-  }
-
   render () {
     let commanderAuthor = null;
     let commanderAuthorTitle = null;
@@ -187,7 +182,7 @@ class AuthorManager extends React.Component {
           onNotify={this.props.onNotify}
           onWait={this.props.onWait}
           onStopWait={this.props.onStopWait}
-          onSave={this.onSaveAuthor}
+          onSave={this.getAuthors}
           waiting={this.props.waiting}
           />
       );

@@ -114,35 +114,10 @@ class PublicationManager extends React.Component {
     });
   };
 
-  savePublication = (publication) => {
-    let isNewPublication = !publication.id;
-    let method = isNewPublication ? axios.post : axios.put;
-    let url = isNewPublication 
-      ? '/api/publication'
-      : '/api/publication/' + publication.id;
-    let loadingMessage = isNewPublication ? 
-      'Creating publication...' : 
-      'Saving publication...';
-    
-    // go server to save publication
-    this.props.onWait(loadingMessage);
-    method(url, publication)
-      .then((response) => {
-        this.props.onStopWait();
-        this.getPublications();
-        this.cancelPublicationForm();
-        setTimeout(() => {
-          let messageType = response.data.status 
-            ? (isNewPublication ? 'success' : 'info') 
-            : 'error';
-          let message = response.data.message;
-          this.props.onNotify(message, messageType);
-        }, 300);
-      })
-      .catch(error => {
-        console.log('error.response?', error.response);
-        this.props.onNotify(error.response.message, 'error');
-      });
+  onSavePublication = (publication) => {
+    console.log('Saved publication', publication);
+    this.getPublications();
+    this.cancelPublicationForm();
   };
 
   cancelPublicationForm = () => {
@@ -194,12 +169,14 @@ class PublicationManager extends React.Component {
           onPrevious={this.goPreviousPage}
           onNext={this.goNextPage}
           onLast={this.goLastPage}
-          onSave={this.savePublication}
+          onSave={this.onSavePublication}
           onCancel={this.cancelPublicationForm}
           onEdit={this.editPublication}
           onStartRemoving={this.startRemoving}
           onConfirmRemoving={this.removePublication}
           onCancelRemoving={this.cancelRemoving}
+          onWait={this.props.onWait}
+          onStopWait={this.props.onStopWait}
           />
       </div>
     );
