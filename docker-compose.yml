@@ -6,6 +6,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: qwe789
+      MYSQL_DATABASE: chaining_db
   server:
     build:
       context: ./server/
