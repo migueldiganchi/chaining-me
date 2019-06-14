@@ -490,6 +490,13 @@ form {
 	&.removing {
 		background-color: #ef5455;
 	}
+
+	&.text-left {
+		text-align: left !important;
+		h4, p {
+			text-align: left !important;
+		}
+	}
 	
 	.keypad {
 		@include transition(visibility, 0.3s, ease);

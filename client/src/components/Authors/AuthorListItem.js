@@ -15,7 +15,7 @@ function AuthorListItem (props) {
   }
 
   return (
-    <div className="list-item"
+    <div className="list-item text-left"
       onClick={() => props.onAuthorOpen(props.author)}>
       <h4>{props.author.name}</h4>
       <p>

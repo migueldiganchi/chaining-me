@@ -30,7 +30,6 @@ exports.getAuthor = (req, res) => {
       });
     })
     .catch(error => {
-      console.log('authorsController.getAuthor error', error);
       res.json({
         status: false,
         message: 'Error getting an author'
@@ -55,7 +54,6 @@ exports.createAuthor = (req, res) => {
         status: false,
         message: 'Error creating author'
       });
-      console.log('authorsController.createAuthor error', error);
     });
 };
 
@@ -73,7 +71,6 @@ exports.updateAuthor = (req, res) => {
       });
     })
     .catch(error => {
-      console.log('authorsController.updateAuthor error', error);
       res.json({
         status: false,
         message: 'Error updating author'
@@ -93,7 +90,6 @@ exports.removeAuthor = (req, res) => {
       });
     })
     .catch(error => {
-      console.log('authorsController.removeAuthor error', error);
       res.json({
         status: false,
         message: 'Error removing author'

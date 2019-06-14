@@ -7,8 +7,39 @@ import Paginator from './../Paginator';
 
 import '../../compiled/components/Publications/Publications.css';
 
-function PublicationList (props) {
 
+function PublicationList (props) {
+  
+  const renderList = () => {
+    if (props.publications) {
+      return props.publications.map((publication) => {
+        return isEditing(publication) ? 
+          <PublicationForm 
+            key={publication.id}
+            publication={props.editingPublication}
+            onCancel={props.onCancel}
+            onNotify={props.onNotify}
+            onSave={props.onSave}
+            author={props.author}
+            onWait={props.onWait}
+            onStopWait={props.onStopWait}
+            /> : 
+          <PublicationListItem 
+            key={publication.id}
+            publication={publication}
+            isRemoving={isRemoving(publication)}
+            isDisabled={isDisabled(publication)}
+            onEdit={props.onEdit}
+            onStartRemoving={props.onStartRemoving}
+            onConfirmRemoving={props.onConfirmRemoving}
+            onCancelRemoving={props.onCancelRemoving}
+            onOpen={goPublication} />
+      })
+    } else {
+      return null;
+    }
+  };
+  
   const isEditing = (publication) => {
     return props.editingPublication && 
       props.editingPublication.id === publication.id;
@@ -61,7 +92,7 @@ function PublicationList (props) {
     <div className="list-container">
       {newForm}
       <div className="publication-list">
-        {props.publications.map((publication) => {
+        {/* {props.publications.map((publication) => {
           return isEditing(publication) ? 
             <PublicationForm 
               key={publication.id}
@@ -83,7 +114,8 @@ function PublicationList (props) {
               onConfirmRemoving={props.onConfirmRemoving}
               onCancelRemoving={props.onCancelRemoving}
               onOpen={goPublication} />
-        })}
+        })} */}
+        { renderList() }
       </div>
       {paginator}
     </div>

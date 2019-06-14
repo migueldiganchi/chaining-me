@@ -45,6 +45,7 @@
 
         &.disabled {
             @include box-shadow(0, 0, 0, #111111);
+    		pointer-events: none;
             background-color: #999;
             * {color: #444b69 !important}
             &:hover {

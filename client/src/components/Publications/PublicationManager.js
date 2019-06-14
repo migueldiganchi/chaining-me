@@ -138,6 +138,7 @@ class PublicationManager extends React.Component {
   render () {
     let searcher = null;
     let publicationListTitle = null;
+    let publicationCount = this.state.publications ? this.state.publications.length : 0;
     
     if (!this.state.newPublication && !this.state.editingPublication) {
       searcher = <Searcher 
@@ -147,7 +148,7 @@ class PublicationManager extends React.Component {
       publicationListTitle = (
         <PublicationListTitle 
           title="Publications"
-          results={this.state.publications.length}
+          results={publicationCount}
           publications={this.state.publications}
           onCreatePublication={this.createPublication} />
       );
