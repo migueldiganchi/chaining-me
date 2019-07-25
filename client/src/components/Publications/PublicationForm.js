@@ -154,7 +154,7 @@ class PublicationForm extends Component {
 
   getAuthorSelectorControl = () => {
     let disabled = false;
-    let authorId = null;
+    let authorId = "";
     
     if (this.props.author) {
       disabled = true;

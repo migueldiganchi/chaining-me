@@ -16,13 +16,11 @@ class PublicationManager extends React.Component {
   };
 
   componentDidMount (term) {
-    console.log('term to get publications');
     this.getPublications();
   };
 
   goFirstPage = (e) => {
     e.preventDefault();
-    console.log('@todo: publications next page');
   };
 
   goPreviousPage = (e) => {

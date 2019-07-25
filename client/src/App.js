@@ -83,8 +83,8 @@ class App extends Component {
         {loadingApp}
         {/* Hader component */}
         <Route path="/" exact render={() => {
-          return <Header title="Welcome to Chaining-me.Text">
-            <p>The new way of doing art, <b>with posts</b></p>
+          return <Header title="Welcome to ReactiBook">
+            {/* <p>The new way of doing art, <b>with posts</b></p> */}
           </Header>
         }} />
         {/* Board component */}

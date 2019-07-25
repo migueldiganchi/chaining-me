@@ -3,8 +3,8 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 import AuthorList from './AuthorList';
-import AuthorForm from './AuthorForm'
-import AuthorRemover from './AuthorRemover'
+import AuthorForm from './AuthorForm';
+import AuthorRemover from './AuthorRemover';
 
 class AuthorManager extends React.Component {
   state = {
@@ -12,23 +12,24 @@ class AuthorManager extends React.Component {
     editingAuthor: null,
     removingAuthor: null,
     authors: []
-  }
+  };
 
-  componentDidMount () {
+  componentDidMount() {
     this.getAuthors();
   }
-  
+
   getAuthors = () => {
-    axios.get('/api/authors')
+    axios
+      .get('/api/authors')
       .then(response => {
-        this.setState({authors: response.data.authors});
+        this.setState({ authors: response.data.authors });
       })
       .catch(error => {
         console.error('Authors endpoint error', error);
       });
-  }
+  };
 
-  goAuthor = (author) => {
+  goAuthor = author => {
     this.props.history.push({
       pathname: '/author/' + author.id
     });
@@ -36,9 +37,9 @@ class AuthorManager extends React.Component {
     this.props.onGoAuthor();
   };
 
-  editAuthor = (author) => {
-    console.log("editing author?", author);
-    this.setState({editingAuthor: author});
+  editAuthor = author => {
+    console.log('editing author?', author);
+    this.setState({ editingAuthor: author });
   };
 
   createAuthor = () => {
@@ -59,12 +60,12 @@ class AuthorManager extends React.Component {
     });
   };
 
-  startRemoving = (author) => {
-    console.log("start removing with author: ", author);
-    this.setState({removingAuthor: author});
+  startRemoving = author => {
+    console.log('start removing with author: ', author);
+    this.setState({ removingAuthor: author });
   };
 
-  removeAuthor = (author) => {
+  removeAuthor = author => {
     console.log('Do effective the removing', author);
     this.props.onWait('Removing author...');
     setTimeout(() => {
@@ -76,51 +77,59 @@ class AuthorManager extends React.Component {
 
   cancelRemoving = () => {
     console.log('cancel removing');
-    this.setState({removingAuthor: null});
+    this.setState({ removingAuthor: null });
   };
 
-  onFirstPage = (e) => {
+  onFirstPage = e => {
     e.preventDefault();
     console.log('@todo: next page');
   };
-  
-  onPreviousPage = (e) => {
+
+  onPreviousPage = e => {
     e.preventDefault();
     console.log('@todo: previous page');
   };
 
-  onNextPage = (e) => {
+  onNextPage = e => {
     e.preventDefault();
     console.log('@todo: next page');
   };
 
-  onLastPage = (e) => {
+  onLastPage = e => {
     e.preventDefault();
     console.log('@todo: last page');
   };
 
-  getCommanderKeypad = (commanderAuthor) => {
+  getCommanderKeypad = commanderAuthor => {
     let keypad = null;
+    let backButtonClassName =
+      this.state.newAuthor || this.state.editingAuthor || this.state.removingAuthor
+        ? 'do do-primary do-circular disabled'
+        : 'do do-primary do-circular';
+
     if (this.props.isAuthorManagerVisible) {
       keypad = [
-        <a key="1"
-          className="do do-primary do-circular"
-          onClick={this.props.onToggleManager}>
+        <a
+          key="1"
+          className={backButtonClassName}
+          onClick={this.props.onToggleManager}
+        >
           <i className="fas fa-hand-point-left" />
-        </a>, 
-        (!commanderAuthor && !this.state.removingAuthor ? <a key="2"
-          className="do do-success"
-          onClick={this.createAuthor}>
-          <i className="fas fa-plus" />
-          Author
-        </a> : null)
+        </a>,
+        !commanderAuthor && !this.state.removingAuthor ? (
+          <a key="2" className="do do-success" onClick={this.createAuthor}>
+            <i className="fas fa-plus" />
+            Author
+          </a>
+        ) : null
       ];
     } else {
-      keypad = <a className="do do-primary "
-        onClick={this.props.onToggleManager}>
-        <i className="fas fa-feather" />
-        Author Manager
-      </a>
+      keypad = (
+        <a className="do do-primary " onClick={this.props.onToggleManager}>
+          <i className="fas fa-feather" />
+          Author Manager
+        </a>
+      );
     }
     return keypad;
   };
@@ -132,18 +141,18 @@ class AuthorManager extends React.Component {
       </h5>
     ) : (
       <h5>
-        Authors 
+        Authors
         <small>{this.state.authors.length}</small>
       </h5>
-    )
+    );
   };
 
-  render () {
+  render() {
     let commanderAuthor = null;
     let commanderAuthorTitle = null;
-    let commanderClassName = this.props.isAuthorManagerVisible ? 
-      'App-commander opened ' : 
-      'App-commander';
+    let commanderClassName = this.props.isAuthorManagerVisible
+      ? 'App-commander opened '
+      : 'App-commander';
 
     if (this.state.newAuthor) {
       commanderAuthor = this.state.newAuthor;
@@ -152,17 +161,17 @@ class AuthorManager extends React.Component {
       commanderAuthor = this.state.editingAuthor;
       commanderAuthorTitle = 'Editing Author';
     } else if (this.state.removingAuthor) {
-      commanderAuthorTitle = 'Removing: Are you sure?'
+      commanderAuthorTitle = 'Removing: Are you sure?';
     }
 
     let commanderKeypad = this.getCommanderKeypad(commanderAuthor);
     let commanderTop = this.getCommanderTop(
-      commanderAuthor, 
+      commanderAuthor,
       commanderAuthorTitle
     );
     let commanderDashbardClassName = null;
     let commanderBody = null;
-    
+
     if (this.state.removingAuthor) {
       commanderDashbardClassName = 'dashboard confirmation';
       commanderBody = (
@@ -171,49 +180,43 @@ class AuthorManager extends React.Component {
           onCancelRemoving={this.cancelRemoving}
           onConfirmRemoving={this.removeAuthor}
           waiting={this.props.waiting}
-          />
+        />
       );
     } else if (commanderAuthor) {
       commanderDashbardClassName = 'dashboard saving';
       commanderBody = (
-        <AuthorForm 
+        <AuthorForm
           author={commanderAuthor}
-          onCancel={this.cancelAuthorForm} 
+          onCancel={this.cancelAuthorForm}
           onNotify={this.props.onNotify}
           onWait={this.props.onWait}
           onStopWait={this.props.onStopWait}
           onSave={this.getAuthors}
           waiting={this.props.waiting}
-          />
+        />
       );
     } else {
       commanderDashbardClassName = 'dashboard';
       commanderBody = (
-        <AuthorList 
+        <AuthorList
           authors={this.state.authors}
           onEdit={this.editAuthor}
           onStartRemoving={this.startRemoving}
           onAuthorOpen={this.goAuthor}
-          onFirst={this.onFirstPage} 
-          onPrevious={this.onPreviousPage} 
-          onNext={this.onNextPage} 
+          onFirst={this.onFirstPage}
+          onPrevious={this.onPreviousPage}
+          onNext={this.onNextPage}
           onLast={this.onLastPage}
-          />
+        />
       );
     }
 
     return (
       <div className={commanderClassName}>
-        <div className="keypad">
-          {commanderKeypad}
-        </div>
+        <div className="keypad">{commanderKeypad}</div>
         <div className={commanderDashbardClassName}>
-          <div className="dashboard-top">
-            {commanderTop}
-          </div>
-          <div className="dashboard-body">
-            {commanderBody}
-          </div>
+          <div className="dashboard-top">{commanderTop}</div>
+          <div className="dashboard-body">{commanderBody}</div>
         </div>
       </div>
     );
